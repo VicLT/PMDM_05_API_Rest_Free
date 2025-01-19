@@ -2,15 +2,17 @@ package edu.pract5.apirestfree.data
 
 import androidx.room.Dao
 import androidx.room.Database
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RoomDatabase
 import edu.pract5.apirestfree.models.Motorcycle
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Class MotorcyclesRoomDB.kt
- * Define a local database with the Motorcycles table with Room.
+ * Define the local database with a Motorcycles table with Room.
  *
  * @author Víctor Lamas
  */
@@ -19,31 +21,43 @@ abstract class MotorcyclesRoomDB : RoomDatabase() {
     abstract fun motorcyclesDao(): MotorcyclesDao
 }
 
+/**
+ * DAO implementations for child classes.
+ *
+ * @author Víctor Lamas
+ */
 @Dao
 interface MotorcyclesDao {
     /**
-     * Inserts a list of motorcycles into the database.
-     * In case of conflict, it replaces the city.
+     * Insert a favourite motorcycle in the local DB.
+     * In case of conflict, it replaces the motorcycle.
      *
-     * @param motorcycles The list of motorcycles to insert.
+     * @param motorcycle Motorcycle marked as favourite.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMotorcycle(motorcycles: List<Motorcycle>)
+    suspend fun saveFavMotorcycle(motorcycle: Motorcycle)
 
     /**
-     * Gets all the motorcycles from the database sorted by make.
+     * Gets all motorcycles from local DB sorted by ascendant make.
      *
-     * @return List of motorcycles.
+     * @return Ascendant sorted list of motorcycles.
      */
-    @Query("SELECT * FROM motorcycle ORDER BY make ASC")
-    suspend fun getMotorcycles(): List<Motorcycle>
+    @Query("SELECT * FROM Motorcycle ORDER BY make ASC")
+    fun getFavMotorcyclesAsc(): Flow<List<Motorcycle>>
 
     /**
-     * Gets the motorcycles that match the model from the database sorted by model.
+     * Gets all motorcycles from local DB sorted by descendant make.
      *
-     * @param model The model of the motorcycle to search.
-     * @return List of motorcycles that match the model and sorted by same property.
+     * @return Descendant sorted list of motorcycles.
      */
-    @Query("SELECT * FROM motorcycle WHERE model LIKE :model ORDER BY model ASC")
-    suspend fun getMotorcyclesByModel(model: String): List<Motorcycle>
+    @Query("SELECT * FROM Motorcycle ORDER BY make DESC")
+    fun getFavMotorcyclesDesc(): Flow<List<Motorcycle>>
+
+    /**
+     * Delete a motorcycle from the local DB.
+     *
+     * @param motorcycle The motorcycle to delete.
+     */
+    @Delete
+    suspend fun deleteFavMotorcycle(motorcycle: Motorcycle)
 }

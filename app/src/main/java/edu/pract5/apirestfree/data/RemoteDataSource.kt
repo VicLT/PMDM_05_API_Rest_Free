@@ -1,8 +1,10 @@
 package edu.pract5.apirestfree.data
 
 import edu.pract5.apirestfree.models.Motorcycle
+import kotlinx.coroutines.flow.flow
 
 /**
+ * Class RemoteDataSource.kt
  * Responsible for making the request to the motorcycles API.
  * @author Víctor Lamas
  *
@@ -14,10 +16,10 @@ class RemoteDataSource {
     /**
      * Gets a list of motorcycles from the API.
      *
-     * @return The list of motorcycles.
+     * @return A flow list of motorcycles.
      */
-    suspend fun getMotorcycles(): List<Motorcycle> {
-        return api.getMotorcycles()
+    fun getRemoteMotorcycles() = flow {
+        emit(api.getRemoteMotorcycles())
     }
 
     /**
@@ -26,7 +28,7 @@ class RemoteDataSource {
      * @param model The model of the motorcycles to get.
      * @return The list of motorcycles.
      */
-    suspend fun getMotorcyclesByModel(model: String): List<Motorcycle> {
-        return api.getMotorcyclesByModel(model)
+    suspend fun getRemoteMotorcyclesByModel(model: String): List<Motorcycle> {
+        return api.getRemoteMotorcyclesByModel(model)
     }
 }

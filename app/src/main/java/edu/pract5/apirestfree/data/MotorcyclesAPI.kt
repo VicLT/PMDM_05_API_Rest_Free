@@ -30,7 +30,7 @@ class MotorcyclesAPI {
 
 /**
  * Defines the methods to make the request to the motorcycles API.
- * @author Víctor Lamas
+ *
  */
 interface MotorcyclesAPIInterface {
     /**
@@ -40,8 +40,7 @@ interface MotorcyclesAPIInterface {
      */
     @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
     @GET("v1/motorcycles")
-    suspend fun getMotorcycles(
-    ): List<Motorcycle>
+    suspend fun getRemoteMotorcycles(): List<Motorcycle>
 
     /**
      * Gets a list of motorcycles from the API that match the name.
@@ -51,7 +50,7 @@ interface MotorcyclesAPIInterface {
      */
     @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
     @GET("v1/motorcycles")
-    suspend fun getMotorcyclesByModel(
+    suspend fun getRemoteMotorcyclesByModel(
         @Query("model") model: String,
     ): List<Motorcycle>
 }
