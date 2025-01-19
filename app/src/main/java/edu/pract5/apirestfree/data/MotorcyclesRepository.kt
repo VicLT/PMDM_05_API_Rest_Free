@@ -18,7 +18,7 @@ class MotorcyclesRepository (
     /**
      * Get the complete list of API motorcycles.
      *
-     * @return Cold flow composed of a list of motorcycles.
+     * @return Cold flow list of motorcycles.
      */
     fun getRemoteMotorcycles(): Flow<List<Motorcycle>> {
         return remoteDataSource.getRemoteMotorcycles()
@@ -27,7 +27,7 @@ class MotorcyclesRepository (
     /**
      * Get the ascendant sorted list of favourite motorcycles from the local DB.
      *
-     * @return Cold flow of an ascendant sorted list.
+     * @return Cold flow ascendant sorted list.
      */
     fun getAscSortedFavMotorcycles(): Flow<List<Motorcycle>> {
         return localDataSource.getAscFavMotorcycles()
@@ -36,7 +36,7 @@ class MotorcyclesRepository (
     /**
      * Get the descendant sorted list of favourite motorcycles from the local DB.
      *
-     * @return Cold flow of a descendant sorted list.
+     * @return Cold flow descendant sorted list.
      */
     fun getDescSortedFavMotorcycles(): Flow<List<Motorcycle>> {
         return localDataSource.getDescFavMotorcycles()

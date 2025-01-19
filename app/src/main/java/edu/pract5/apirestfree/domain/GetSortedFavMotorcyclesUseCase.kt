@@ -5,6 +5,13 @@ import edu.pract5.apirestfree.models.Motorcycle
 import edu.pract5.apirestfree.utils.MotorcyclesFilter
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Class GetSortedFavMotorcyclesUseCase.kt
+ * Gets the list of favourite motorcycles from the local DB sorted by a filter.
+ * @author Víctor Lamas
+ *
+ * @param motorcyclesRepository The repository to get the motorcycles.
+ */
 class GetSortedFavMotorcyclesUseCase(
     private val motorcyclesRepository: MotorcyclesRepository
 ) {
@@ -12,7 +19,7 @@ class GetSortedFavMotorcyclesUseCase(
      * Get the complete list of favourite motorcycles from the local DB.
      *
      * @param filter Ascendant or descendant sorting filter.
-     * @return Cold flow composed of a list of favourite motorcycles.
+     * @return Cold flow list of favourite motorcycles.
      */
     operator fun invoke(filter: MotorcyclesFilter): Flow<List<Motorcycle>> {
         return when (filter) {
