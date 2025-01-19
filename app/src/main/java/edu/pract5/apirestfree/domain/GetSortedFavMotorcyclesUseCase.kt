@@ -22,9 +22,6 @@ class GetSortedFavMotorcyclesUseCase(
      * @return Cold flow list of favourite motorcycles.
      */
     operator fun invoke(filter: MotorcyclesFilter): Flow<List<Motorcycle>> {
-        return when (filter) {
-            MotorcyclesFilter.ALPHA_ASC -> motorcyclesRepository.getAscSortedFavMotorcycles()
-            MotorcyclesFilter.ALPHA_DESC -> motorcyclesRepository.getDescSortedFavMotorcycles()
-        }
+        return motorcyclesRepository.getSortedFavMotorcycles(filter)
     }
 }
