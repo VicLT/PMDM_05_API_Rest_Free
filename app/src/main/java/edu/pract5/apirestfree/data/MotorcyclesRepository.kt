@@ -1,6 +1,7 @@
 package edu.pract5.apirestfree.data
 
 import edu.pract5.apirestfree.models.Motorcycle
+import edu.pract5.apirestfree.utils.MotorcyclesFilter
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -25,21 +26,16 @@ class MotorcyclesRepository (
     }
 
     /**
-     * Get the ascendant sorted list of favourite motorcycles from the local DB.
+     * Get the complete sorted list of favourite motorcycles from the local DB.
      *
-     * @return Cold flow ascendant sorted list.
+     * @param filter Ascendant or descendant sorting filter.
+     * @return Cold flow list of favourite motorcycles.
      */
-    fun getAscSortedFavMotorcycles(): Flow<List<Motorcycle>> {
-        return localDataSource.getAscFavMotorcycles()
-    }
-
-    /**
-     * Get the descendant sorted list of favourite motorcycles from the local DB.
-     *
-     * @return Cold flow descendant sorted list.
-     */
-    fun getDescSortedFavMotorcycles(): Flow<List<Motorcycle>> {
-        return localDataSource.getDescFavMotorcycles()
+    fun getSortedFavMotorcycles(filter: MotorcyclesFilter): Flow<List<Motorcycle>> {
+        return when (filter) {
+            MotorcyclesFilter.ALPHA_ASC -> localDataSource.getAscFavMotorcycles()
+            MotorcyclesFilter.ALPHA_DESC -> localDataSource.getDescFavMotorcycles()
+        }
     }
 
     /**

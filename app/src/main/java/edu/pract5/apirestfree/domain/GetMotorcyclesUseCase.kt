@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
  *
  * @param motorcyclesRepository The repository to get the motorcycles.
  */
-class GetRemoteMotorcyclesUseCase(
+class GetMotorcyclesUseCase(
     private val motorcyclesRepository: MotorcyclesRepository
 ) {
     /**
