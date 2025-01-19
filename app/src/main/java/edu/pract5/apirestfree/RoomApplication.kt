@@ -2,6 +2,7 @@ package edu.pract5.apirestfree
 
 import android.app.Application
 import androidx.room.Room
+import edu.pract5.apirestfree.data.MotorcyclesRoomDB
 
 /**
  * Class RoomApplication.kt
@@ -9,14 +10,15 @@ import androidx.room.Room
  * @author Víctor Lamas
  */
 class RoomApplication : Application() {
-    private lateinit var motorcyclesDb: MotorcyclesDatabase
+    private lateinit var motorcyclesDB: MotorcyclesRoomDB
         private set
 
     override fun onCreate() {
         super.onCreate()
-        motorcyclesDb = Room.databaseBuilder(
+
+        motorcyclesDB = Room.databaseBuilder(
             this,
-            MotorcyclesDatabase::class.java,
+            MotorcyclesRoomDB::class.java,
             "Motorcycles-db"
         ).build()
     }

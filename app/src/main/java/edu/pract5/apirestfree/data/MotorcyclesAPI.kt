@@ -1,5 +1,8 @@
 package edu.pract5.apirestfree.data
 
+import edu.pract5.apirestfree.BuildConfig
+import edu.pract5.apirestfree.data.MotorcyclesAPI.Companion.BASE_URL
+import edu.pract5.apirestfree.models.Motorcycle
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -7,13 +10,13 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 /**
- * Responsible for making the request to the motorcycles API.
- * It uses Retrofit2 to make the request.
+ * Class Retrofit2Api.kt
+ * Connection to the Motorcycles API via Retrofit2.
  * @author Víctor Lamas
  *
  * @property BASE_URL The base URL of the API.
  */
-class CitiesAPI {
+class MotorcyclesAPI {
     companion object {
         private const val BASE_URL = "https://api.api-ninjas.com/"
 
@@ -33,26 +36,22 @@ interface MotorcyclesAPIInterface {
     /**
      * Gets a list of motorbikes from the API.
      *
-     * @param limiter The maximum number of cities to get.
-     * @return The list of cities.
+     * @return List of all motorcycles.
      */
     @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
     @GET("v1/motorcycles")
-    suspend fun getCities(
-        @Query("limit") limiter: Int = 30
-    ): List<City>
+    suspend fun getMotorcycles(
+    ): List<Motorcycle>
 
     /**
-     * Gets a list of cities from the API that match the name.
+     * Gets a list of motorcycles from the API that match the name.
      *
-     * @param name The name of the cities to get.
-     * @param limit The maximum number of cities to get.
-     * @return The list of cities.
+     * @param model The model of the motorcycle to get.
+     * @return List of matching motorcycles
      */
     @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
-    @GET("v1/city")
-    suspend fun getCitiesByName(
-        @Query("name") name: String,
-        @Query("limit") limit: Int = 30
-    ): List<City>
+    @GET("v1/motorcycles")
+    suspend fun getMotorcyclesByModel(
+        @Query("model") model: String,
+    ): List<Motorcycle>
 }
