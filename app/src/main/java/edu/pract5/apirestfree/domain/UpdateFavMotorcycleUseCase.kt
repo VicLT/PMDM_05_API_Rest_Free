@@ -11,7 +11,7 @@ class UpdateFavMotorcycleUseCase(
      *
      * @param favMotorcycle Motorcycle marked as favourite.
      */
-    operator fun invoke(favMotorcycle: Motorcycle) {
+    suspend operator fun invoke(favMotorcycle: Motorcycle) {
         if (favMotorcycle.favourite) {
             motorcyclesRepository.saveFavMotorcycle(favMotorcycle)
         } else {

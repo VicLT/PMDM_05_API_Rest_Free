@@ -16,8 +16,8 @@ class GetSortedFavMotorcyclesUseCase(
      */
     operator fun invoke(filter: MotorcyclesFilter): Flow<List<Motorcycle>> {
         return when (filter) {
-            MotorcyclesFilter.ALPHA_ASC -> localDataSource.getFavMotorcyclesAsc()
-            MotorcyclesFilter.ALPHA_DESC -> localDataSource.getFavMotorcyclesDesc()
+            MotorcyclesFilter.ALPHA_ASC -> motorcyclesRepository.getAscSortedFavMotorcycles()
+            MotorcyclesFilter.ALPHA_DESC -> motorcyclesRepository.getDescSortedFavMotorcycles()
         }
     }
 }
