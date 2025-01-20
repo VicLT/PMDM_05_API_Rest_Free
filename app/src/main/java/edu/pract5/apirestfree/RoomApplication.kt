@@ -7,10 +7,11 @@ import edu.pract5.apirestfree.data.MotorcyclesRoomDB
 /**
  * Class RoomApplication.kt
  * Initializes the local database with Room.
+ *
  * @author Víctor Lamas
  */
 class RoomApplication : Application() {
-    private lateinit var motorcyclesDB: MotorcyclesRoomDB
+    lateinit var motorcyclesDB: MotorcyclesRoomDB
         private set
 
     override fun onCreate() {

@@ -1,4 +1,4 @@
-package edu.pract5.apirestfree.ui
+package edu.pract5.apirestfree.ui.main
 
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +20,9 @@ import edu.pract5.apirestfree.models.Motorcycle
 class MotorcyclesAdapter(
     private val onClick: (Motorcycle) -> Unit,
     private val onClickFav: (Motorcycle) -> Unit
-) : ListAdapter<Motorcycle, MotorcyclesAdapter.MotorcyclesViewHolder>(MotorcyclesDiffCallback()) {
+) : ListAdapter<Motorcycle, MotorcyclesAdapter.MotorcyclesViewHolder>(
+    MotorcyclesDiffCallback()
+) {
 
     /**
      * Creates a ViewHolder for the motorcycle.

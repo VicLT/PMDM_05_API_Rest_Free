@@ -1,4 +1,4 @@
-package edu.pract5.apirestfree.ui
+package edu.pract5.apirestfree.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

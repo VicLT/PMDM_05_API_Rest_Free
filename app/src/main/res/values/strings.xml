@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">API REST FREE</string>
+    <string name="txt_desc_fav">Marcar favorito</string>
+    <string name="txt_opt_deactivate_filters">Deactivate filters</string>
+    <string name="txt_opt_random">Random motorcycle</string>
+    <string name="txt_opt_make_sort">Sort by make</string>
+    <string name="txt_opt_model_sort">Sort by model</string>
+    <string name="txt_optBottom_all">All motorcycles</string>
+    <string name="txt_favourites">Favourite motorcycles</string>
+    <string name="iv_motorcycle">Motorcycle image</string>
 </resources>
