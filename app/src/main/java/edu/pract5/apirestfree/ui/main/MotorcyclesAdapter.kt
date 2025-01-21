@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import edu.pract5.apirestfree.R
 import edu.pract5.apirestfree.databinding.MotorcycleItemBinding
 import edu.pract5.apirestfree.models.Motorcycle
 
@@ -64,6 +65,19 @@ class MotorcyclesAdapter(
         private val bind = MotorcycleItemBinding.bind(view)
 
         fun bind(motorcycle: Motorcycle) {
+            bind.tvMake.text = motorcycle.make
+            bind.tvModel.text = motorcycle.model
+            bind.root.setOnClickListener {
+                onClick(motorcycle)
+            }
+            bind.ivFav.setOnClickListener(
+                onClickFav(motorcycle)
+                notifyItemChanged(adapterPosition)
+            )
+            bind.ivFav.setImageState(
+                intArrayOf(R.attr.state_on),
+                motorcycle.favourite
+            )
         }
     }
 }

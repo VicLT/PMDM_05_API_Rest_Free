@@ -22,6 +22,7 @@ import edu.pract5.apirestfree.domain.GetMotorcyclesUseCase
 import edu.pract5.apirestfree.domain.GetSortedFavMotorcyclesUseCase
 import edu.pract5.apirestfree.domain.UpdateFavMotorcycleUseCase
 import edu.pract5.apirestfree.models.Motorcycle
+import edu.pract5.apirestfree.ui.detail.DetailMotorcycleActivity
 import edu.pract5.apirestfree.utils.checkConnection
 import kotlinx.coroutines.launch
 
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     private val adapter = MotorcyclesAdapter(
         onClick = { motorcycle ->
-            showRandomMotorcycle(motorcycle)
+            DetailMotorcycleActivity.navigateToDetail(this@MainActivity, motorcycle)
         },
         onClickFav = { motorcycle ->
             motorcycle.favourite = !motorcycle.favourite
