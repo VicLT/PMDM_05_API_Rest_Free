@@ -9,128 +9,94 @@ import kotlinx.parcelize.Parcelize
 /**
  * DataClass Motorcycle.kt
  * Represents the properties of a motorcycle.
+ * Only important params to show in documentation.
  * @author Víctor Lamas
  *
- * @param boreStroke The bore and stroke of the motorcycle.
- * @param clutch The clutch of the motorcycle.
- * @param compression The compression of the motorcycle.
- * @param cooling The cooling of the motorcycle.
- * @param displacement The displacement of the motorcycle.
- * @param engine The engine of the motorcycle.
- * @param frame The frame of the motorcycle.
- * @param frontBrakes The front brakes of the motorcycle.
- * @param frontSuspension The front suspension of the motorcycle.
- * @param frontTire The front tire of the motorcycle.
- * @param frontWheelTravel The front wheel travel of the motorcycle.
- * @param fuelCapacity The fuel capacity of the motorcycle.
- * @param fuelControl The fuel control of the motorcycle.
- * @param fuelSystem The fuel system of the motorcycle.
- * @param gearbox The gearbox of the motorcycle.
- * @param groundClearance The ground clearance of the motorcycle.
- * @param ignition The ignition of the motorcycle.
- * @param lubrication The lubrication of the motorcycle.
  * @param make The make of the motorcycle.
  * @param model The model of the motorcycle.
- * @param power The power of the motorcycle.
- * @param rearBrakes The rear brakes of the motorcycle.
- * @param rearSuspension The rear suspension of the motorcycle.
- * @param rearTire The rear tire of the motorcycle.
- * @param rearWheelTravel The rear wheel travel of the motorcycle.
- * @param seatHeight The seat height of the motorcycle.
- * @param starter The starter of the motorcycle.
- * @param torque The torque of the motorcycle.
- * @param totalHeight The total height of the motorcycle.
- * @param totalLength The total length of the motorcycle.
- * @param totalWeight The total weight of the motorcycle.
- * @param totalWidth The total width of the motorcycle.
- * @param transmission The transmission of the motorcycle.
- * @param type The type of the motorcycle.
- * @param valvesPerCylinder The valves per cylinder of the motorcycle.
- * @param wheelbase The wheelbase of the motorcycle.
- * @param year The year of the motorcycle.
  * @param favourite If the motorcycle is favourite.
  */
 @Parcelize
 @Entity(primaryKeys = ["make", "model"])
 data class Motorcycle(
-    @SerializedName("bore_stroke")
-    val boreStroke: String?,
-    @SerializedName("clutch")
-    val clutch: String?,
-    @SerializedName("compression")
-    val compression: String?,
-    @SerializedName("cooling")
-    val cooling: String?,
+    //@SerializedName("bore_stroke")
+    var boreStroke: String? = null,
+    //@SerializedName("clutch")
+    var clutch: String? = null,
+    //@SerializedName("compression")
+    var compression: String? = null,
+    //@SerializedName("cooling")
+    var cooling: String? = null,
     @SerializedName("displacement")
-    val displacement: String?,
-    @SerializedName("engine")
-    val engine: String?,
-    @SerializedName("frame")
-    val frame: String?,
-    @SerializedName("front_brakes")
-    val frontBrakes: String?,
-    @SerializedName("front_suspension")
-    val frontSuspension: String?,
+    var displacement: String? = null,
+    //@SerializedName("engine")
+    var engine: String? = null,
+    //@SerializedName("frame")
+    var frame: String? = null,
+    //@SerializedName("front_brakes")
+    var frontBrakes: String? = null,
+    //@SerializedName("front_suspension")
+    var frontSuspension: String? = null,
     @SerializedName("front_tire")
-    val frontTire: String?,
-    @SerializedName("front_wheel_travel")
-    val frontWheelTravel: String?,
-    @SerializedName("fuel_capacity")
-    val fuelCapacity: String?,
-    @SerializedName("fuel_control")
-    val fuelControl: String?,
-    @SerializedName("fuel_system")
-    val fuelSystem: String?,
-    @SerializedName("gearbox")
-    val gearbox: String?,
-    @SerializedName("ground_clearance")
-    val groundClearance: String?,
-    @SerializedName("ignition")
-    val ignition: String?,
-    @SerializedName("lubrication")
-    val lubrication: String?,
+    var frontTire: String? = null,
+    //@SerializedName("front_wheel_travel")
+    var frontWheelTravel: String? = null,
+    //@SerializedName("fuel_capacity")
+    var fuelCapacity: String? = null,
+    //@SerializedName("fuel_control")
+    var fuelControl: String? = null,
+    //@SerializedName("fuel_system")
+    var fuelSystem: String? = null,
+    //@SerializedName("gearbox")
+    var gearbox: String? = null,
+    //@SerializedName("ground_clearance")
+    var groundClearance: String? = null,
+    //@SerializedName("ignition")
+    var ignition: String? = null,
+    //@SerializedName("lubrication")
+    var lubrication: String? = null,
     @SerializedName("make")
-    val make: String,
+    var make: String = "",
     @SerializedName("model")
-    val model: String,
+    var model: String = "",
     @SerializedName("power")
-    val power: String?,
-    @SerializedName("rear_brakes")
-    val rearBrakes: String?,
-    @SerializedName("rear_suspension")
-    val rearSuspension: String?,
+    var power: String? = null,
+    //@SerializedName("rear_brakes")
+    var rearBrakes: String? = null,
+    //@SerializedName("rear_suspension")
+    var rearSuspension: String? = null,
     @SerializedName("rear_tire")
-    val rearTire: String?,
-    @SerializedName("rear_wheel_travel")
-    val rearWheelTravel: String?,
-    @SerializedName("seat_height")
-    val seatHeight: String?,
-    @SerializedName("starter")
-    val starter: String?,
+    var rearTire: String? = null,
+    //@SerializedName("rear_wheel_travel")
+    var rearWheelTravel: String? = null,
+    //@SerializedName("seat_height")
+    var seatHeight: String? = null,
+    //@SerializedName("starter")
+    var starter: String? = null,
     @SerializedName("torque")
-    val torque: String?,
-    @SerializedName("total_height")
-    val totalHeight: String?,
-    @SerializedName("total_length")
-    val totalLength: String?,
+    var torque: String? = null,
+    //@SerializedName("total_height")
+    var totalHeight: String? = null,
+    //@SerializedName("total_length")
+    var totalLength: String? = null,
     @SerializedName("total_weight")
-    val totalWeight: String?,
-    @SerializedName("total_width")
-    val totalWidth: String?,
-    @SerializedName("transmission")
-    val transmission: String?,
+    var totalWeight: String? = null,
+    //@SerializedName("total_width")
+    var totalWidth: String? = null,
+    //@SerializedName("transmission")
+    var transmission: String? = null,
     @SerializedName("type")
-    val type: String?,
-    @SerializedName("valves_per_cylinder")
-    val valvesPerCylinder: String?,
-    @SerializedName("wheelbase")
-    val wheelbase: String?,
+    var type: String? = null,
+    //@SerializedName("valves_per_cylinder")
+    var valvesPerCylinder: String? = null,
+    //@SerializedName("wheelbase")
+    var wheelbase: String? = null,
     @SerializedName("year")
-    val year: String?,
+    var year: String? = null,
 
     @Ignore
     var favourite: Boolean = false
-) : Parcelable {
+) : Parcelable /*{
     constructor(
         boreStroke: String?,
         clutch: String?,
@@ -209,4 +175,4 @@ data class Motorcycle(
         year,
         false
     )
-}
+}*/

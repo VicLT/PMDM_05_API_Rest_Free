@@ -2,6 +2,7 @@ package edu.pract5.apirestfree.ui.detail
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -51,7 +52,7 @@ class DetailActivity : AppCompatActivity() {
         } else {
             Toast.makeText(
                 this@DetailActivity,
-                "No city data",
+                getString(R.string.txt_no_data),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -87,5 +88,30 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.mToolbarDetail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.txt_back)
+
+        // Abre el navegador con la búsqueda de la moto en Google Imágenes
+        binding.tvMakeAndModel.setOnClickListener {
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(
+                    String.format(
+                        getString(R.string.url_google_images),
+                        motorcycle.make,
+                        motorcycle.model,
+                        motorcycle.year ?: ""
+                    )
+                )
+            ).apply {
+                if (this.resolveActivity(packageManager) != null) {
+                    startActivity(this)
+                } else {
+                    Toast.makeText(
+                        this@DetailActivity,
+                        getString(R.string.txt_no_browser),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 }
