@@ -1,140 +1,162 @@
 package edu.pract5.apirestfree.ui.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import edu.pract5.apirestfree.data.MotorcyclesRepository
+import edu.pract5.apirestfree.domain.GetMotorcyclesUseCase
+import edu.pract5.apirestfree.domain.GetSortedFavMotorcyclesUseCase
+import edu.pract5.apirestfree.domain.UpdateFavMotorcycleUseCase
+import edu.pract5.apirestfree.models.Motorcycle
+import edu.pract5.apirestfree.utils.MotorcyclesFilter
+import edu.pract5.apirestfree.utils.motorcyclesFilter
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 
 /**
  * Class MainViewModel.kt
- * Gestiona las operaciones y el estado de los datos en la UI de MainActivity.
+ * Manages operations and data status in the MainActivity UI.
  * @author Víctor Lamas
  *
- * @param repository Permite recuperar todas las palabras y sus propiedades.
+ * @param getMotorcyclesUseCase Use case to get the motorcycles from the API.
+ * @param getSortedFavMotorcyclesUseCase Use case to get the sorted favourite motorcycles from the local DB.
+ * @param updateFavMotorcycleUseCase Use case to update the favourite motorcycle in the local DB.
  */
-class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel() {
-    /*var isFavouriteWordsSelected: Boolean = false
+class MainViewModel (
+    private val getMotorcyclesUseCase: GetMotorcyclesUseCase,
+    private val getSortedFavMotorcyclesUseCase: GetSortedFavMotorcyclesUseCase,
+    private val updateFavMotorcycleUseCase: UpdateFavMotorcycleUseCase
+) : ViewModel() {
+    var isFavouriteMotorcyclesSelected: Boolean = false
         set(value) {
             field = value
-            _words.value = sortByWordsFilter(
-                _favWords.value.takeIf { field } ?: _apiWords.value
+            _motorcycles.value = sortByMotorcyclesFilter(
+                _favMotorcycles.value.takeIf { field } ?: _apiMotorcycles.value
             )
         }
 
-    private var _words: MutableStateFlow<List<Word>> = MutableStateFlow(emptyList())
-    val words: StateFlow<List<Word>>
-        get() = _words.asStateFlow()
+    private var _motorcycles: MutableStateFlow<List<Motorcycle>> = MutableStateFlow(emptyList())
+    val motorcycles: StateFlow<List<Motorcycle>>
+        get() = _motorcycles.asStateFlow()
 
-    private var _apiWords: MutableStateFlow<List<Word>> = MutableStateFlow(emptyList())
-    private var _favWords: MutableStateFlow<List<Word>> = MutableStateFlow(emptyList())
+    private var _apiMotorcycles: MutableStateFlow<List<Motorcycle>> = MutableStateFlow(emptyList())
+    private var _favMotorcycles: MutableStateFlow<List<Motorcycle>> = MutableStateFlow(emptyList())
 
     init {
-        getFavWords()
-        getApiWords()
-        getAllWords()
-    }*/
+        getFavMotorcycles()
+        getRemoteMotorcycles()
+        getAllMotorcycles()
+    }
 
     /**
      * Actualiza el filtro y ordena la lista de palabras combinadas.
      */
-    /*fun sortWords() {
-        wordsFilter =
-            if (wordsFilter == WordsFilter.ALPHA_ASC) {
-                WordsFilter.ALPHA_DESC
+    fun sortMotorcycles() {
+        motorcyclesFilter =
+            if (motorcyclesFilter == MotorcyclesFilter.ALPHA_ASC) {
+                MotorcyclesFilter.ALPHA_DESC
             } else {
-                WordsFilter.ALPHA_ASC
+                MotorcyclesFilter.ALPHA_ASC
             }
-        _words.value = sortByWordsFilter(_words.value)
-    }*/
+        _motorcycles.value = sortByMotorcyclesFilter(_motorcycles.value)
+    }
 
     /**
      * Insertar o borrar una palabra favorita en la BD local.
      * @param word Id, nombre, descripción y estado favorita.
      */
-    /*fun updateWord(word: Word) {
+    fun updateMotorcycle(motorcycle: Motorcycle) {
         viewModelScope.launch {
-            repository.updateFavWord(word)
+            updateFavMotorcycleUseCase.invoke(motorcycle)
         }
-    }*/
+    }
 
     /**
      * Busca en la lista una palabra aleatoria.
      * @return Palabra con nombre y descripción o null.
      */
-    /*fun getRandomWord(): Word? =
-        if (isFavouriteWordsSelected) {
-            _words.value.filter { word -> word.favourite }
+    fun getRandomMotorcycle(): Motorcycle? =
+        if (isFavouriteMotorcyclesSelected) {
+            _motorcycles.value.filter { motorcycle -> motorcycle.favourite }
         } else {
-            _words.value
-        }.randomOrNull()*/
+            _motorcycles.value
+        }.randomOrNull()
 
     /**
      * Recupera las palabras de la API.
      */
-    /*fun getApiWords() {
-        _apiWords.value = emptyList()
+    fun getRemoteMotorcycles() {
+        _apiMotorcycles.value = emptyList()
         viewModelScope.launch {
-            repository.getAllApiWords().collect {
-                _apiWords.value = it
+            getMotorcyclesUseCase.invoke().collect {
+                _apiMotorcycles.value = it
             }
         }
-    }*/
+    }
 
     /**
      * Recupera las palabras favoritas ordenadas de la BD local.
      */
-    /*private fun getFavWords() {
+    private fun getFavMotorcycles() {
         viewModelScope.launch {
-            repository.getSortedFavWords(filter = wordsFilter).collect {
-                _favWords.value = it.map { word ->
+            getSortedFavMotorcyclesUseCase.invoke(filter = motorcyclesFilter).collect {
+                _favMotorcycles.value = it.map { word ->
                     word.favourite = true
                     word
                 }
             }
         }
-    }*/
+    }
 
     /**
      * Combina las palabras de la API con las favoritas y las ordena.
      */
-    /*private fun getAllWords() {
+    private fun getAllMotorcycles() {
         viewModelScope.launch {
-            combine(_apiWords, _favWords) { apiWords, favWords ->
-                apiWords.map { apiWord ->
-                    apiWord.apply {
-                        favourite = favWords.any { favWord ->
-                            favWord.idWord == apiWord.idWord }
+            combine(_apiMotorcycles, _favMotorcycles) { apiMotorcycles, favMotorcycles ->
+                apiMotorcycles.map { apiMotorcycle ->
+                    apiMotorcycle.apply {
+                        favourite = favMotorcycles.any { favMotorcycle ->
+                            favMotorcycle.make == apiMotorcycle.make
+                            && favMotorcycle.model == apiMotorcycle.model
+                        }
                     }
                 }
             }.catch { exception ->
                 Log.e("MainViewModel", exception.message.toString())
-            }.collect { words ->
-                _words.value = if (isFavouriteWordsSelected) {
-                    sortByWordsFilter(words.filter { word
-                        -> word.favourite
+            }.collect { motorcycles ->
+                _motorcycles.value = if (isFavouriteMotorcyclesSelected) {
+                    sortByMotorcyclesFilter(motorcycles.filter { motorcycle
+                        -> motorcycle.favourite
                     })
                 } else {
-                    sortByWordsFilter(words)
+                    sortByMotorcyclesFilter(motorcycles)
                 }
             }
         }
-    }*/
+    }
 
     /**
      * Ordena las palabras de la lista combinada.
      * @param words Lista de palabras.
      * @return Lista de palabras ordenadas.
      */
-    /*private fun sortByWordsFilter(words: List<Word>): List<Word> {
-        return when (wordsFilter) {
-            WordsFilter.ALPHA_ASC -> words.sortedBy { word ->
-                word.word?.uppercase()
+    private fun sortByMotorcyclesFilter(motorcycles: List<Motorcycle>): List<Motorcycle> {
+        return when (motorcyclesFilter) {
+            MotorcyclesFilter.ALPHA_ASC -> motorcycles.sortedBy { motorcycle ->
+                motorcycle.model.uppercase()
             }
 
-            WordsFilter.ALPHA_DESC -> words.sortedByDescending { word ->
-                word.word?.uppercase()
+            MotorcyclesFilter.ALPHA_DESC -> motorcycles.sortedByDescending { motorcycle ->
+                motorcycle.model.uppercase()
             }
         }
-    }*/
+    }
 }
 
 /**
@@ -144,9 +166,16 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
  * @param repository It allows retrieving all motorcycles and their properties.
  */
 @Suppress("UNCHECKED_CAST")
-class MainViewModelFactory(private val repository: MotorcyclesRepository)
-    : ViewModelProvider.Factory {
+class MainViewModelFactory(
+    private val getMotorcyclesUseCase: GetMotorcyclesUseCase,
+    private val getSortedFavMotorcyclesUseCase: GetSortedFavMotorcyclesUseCase,
+    private val updateFavMotorcycleUseCase: UpdateFavMotorcycleUseCase
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MainViewModel(repository) as T
+        return MainViewModel(
+            getMotorcyclesUseCase,
+            getSortedFavMotorcyclesUseCase,
+            updateFavMotorcycleUseCase
+        ) as T
     }
 }

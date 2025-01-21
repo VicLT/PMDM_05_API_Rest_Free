@@ -8,4 +8,5 @@
     <string name="txt_optBottom_all">All motorcycles</string>
     <string name="txt_favourites">Favourite motorcycles</string>
     <string name="iv_motorcycle">Motorcycle image</string>
+    <string name="txt_noConnection">No Internet connection.</string>
 </resources>

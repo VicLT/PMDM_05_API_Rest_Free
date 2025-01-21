@@ -13,19 +13,14 @@ import edu.pract5.apirestfree.data.LocalDataSource
 import edu.pract5.apirestfree.data.MotorcyclesRepository
 import edu.pract5.apirestfree.data.RemoteDataSource
 import edu.pract5.apirestfree.databinding.ActivityMainBinding
+import edu.pract5.apirestfree.domain.GetMotorcyclesUseCase
+import edu.pract5.apirestfree.domain.GetSortedFavMotorcyclesUseCase
+import edu.pract5.apirestfree.domain.UpdateFavMotorcycleUseCase
 import edu.pract5.apirestfree.ui.main.MainViewModel
 import edu.pract5.apirestfree.ui.main.MainViewModelFactory
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
-    private val vm: DetailViewModel by viewModels {
-        val db = (application as RoomApplication).motorcyclesDB
-        val localDataSource = LocalDataSource(db.motorcyclesDao())
-        val remoteDataSource = RemoteDataSource()
-        val repository = MotorcyclesRepository(remoteDataSource, localDataSource)
-        MainViewModelFactory(repository)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)

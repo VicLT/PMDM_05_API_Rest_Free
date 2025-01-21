@@ -19,7 +19,7 @@ class GetMotorcyclesUseCase(
      *
      * @return Cold flow list of motorcycles.
      */
-    operator fun invoke(motorcycle: Motorcycle): Flow<List<Motorcycle>> {
-        return motorcyclesRepository.getRemoteMotorcycles()
+    operator fun invoke(): Flow<List<Motorcycle>> {
+        return motorcyclesRepository.getMotorcycles()
     }
 }

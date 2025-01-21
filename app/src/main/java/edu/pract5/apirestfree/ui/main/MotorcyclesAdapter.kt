@@ -83,7 +83,7 @@ class MotorcyclesDiffCallback : DiffUtil.ItemCallback<Motorcycle>() {
      * @return True if the words is the same.
      */
     override fun areItemsTheSame(oldItem: Motorcycle, newItem: Motorcycle): Boolean {
-        return oldItem.motorcycleId == newItem.motorcycleId
+        return oldItem.make == newItem.make && oldItem.model == newItem.model
     }
 
     /**

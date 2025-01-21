@@ -18,8 +18,8 @@ class RemoteDataSource {
      *
      * @return A flow list of motorcycles.
      */
-    fun getRemoteMotorcycles() = flow {
-        emit(api.getRemoteMotorcycles())
+    fun getMotorcycles() = flow {
+        emit(api.getMotorcycles())
     }
 
     /**
@@ -28,7 +28,7 @@ class RemoteDataSource {
      * @param model The model of the motorcycles to get.
      * @return The list of motorcycles.
      */
-    suspend fun getRemoteMotorcyclesByModel(model: String): List<Motorcycle> {
-        return api.getRemoteMotorcyclesByModel(model)
+    suspend fun getMotorcyclesByModel(model: String): List<Motorcycle> {
+        return api.getMotorcyclesByModel(model)
     }
 }

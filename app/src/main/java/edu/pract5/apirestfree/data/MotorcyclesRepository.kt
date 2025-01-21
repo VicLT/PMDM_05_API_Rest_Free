@@ -21,8 +21,8 @@ class MotorcyclesRepository (
      *
      * @return Cold flow list of motorcycles.
      */
-    fun getRemoteMotorcycles(): Flow<List<Motorcycle>> {
-        return remoteDataSource.getRemoteMotorcycles()
+    fun getMotorcycles(): Flow<List<Motorcycle>> {
+        return remoteDataSource.getMotorcycles()
     }
 
     /**

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -71,8 +72,10 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
 
-    // Retrofit
+    // Retrofit2
     implementation(libs.retrofit)
+
+    // Gson
     implementation(libs.converter.gson)
 
     // Glide

@@ -11,13 +11,13 @@ import edu.pract5.apirestfree.models.Motorcycle
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Class MotorcyclesRoomDB.kt
+ * Class MotorcyclesDB.kt
  * Define the local database with a Motorcycles table with Room.
  *
  * @author Víctor Lamas
  */
 @Database(entities = [Motorcycle::class], version = 1)
-abstract class MotorcyclesRoomDB : RoomDatabase() {
+abstract class MotorcyclesDB : RoomDatabase() {
     abstract fun motorcyclesDao(): MotorcyclesDao
 }
 
