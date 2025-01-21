@@ -40,7 +40,9 @@ interface MotorcyclesAPIInterface {
      */
     @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
     @GET("v1/motorcycles")
-    suspend fun getMotorcycles(): List<Motorcycle>
+    suspend fun getMotorcycles(
+        @Query("make") make: String = ""
+    ): List<Motorcycle>
 
     /**
      * Gets a list of motorcycles from the API that match the model.

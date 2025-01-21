@@ -28,7 +28,7 @@ class RemoteDataSource {
      * @param model The model of the motorcycles to get.
      * @return The list of motorcycles.
      */
-    suspend fun getMotorcyclesByModel(model: String): List<Motorcycle> {
+    /*suspend fun getMotorcyclesByModel(model: String): List<Motorcycle> {
         return api.getMotorcyclesByModel(model)
-    }
+    }*/
 }

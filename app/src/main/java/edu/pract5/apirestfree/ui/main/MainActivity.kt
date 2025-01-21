@@ -67,11 +67,11 @@ class MainActivity : AppCompatActivity() {
 
     private val adapter = MotorcyclesAdapter(
         onClick = { motorcycle ->
-            //showWord(word)
+            showRandomMotorcycle(motorcycle)
         },
         onClickFav = { motorcycle ->
             motorcycle.favourite = !motorcycle.favourite
-            //vm.updateWord(word)
+            vm.updateMotorcycle(motorcycle)
         }
     )
 
@@ -106,6 +106,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        binding.swipeRefresh.setOnRefreshListener {
+            if (checkConnection(this)) {
+                vm.getApiMotorcycles()
+            } else {
+                binding.swipeRefresh.isRefreshing = false
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.txt_noConnection),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
     /**
      * It gets all the motorcycles from the API, sorts them and displays them in the VR.
      * Restores the last displayed position.
@@ -116,7 +133,7 @@ class MainActivity : AppCompatActivity() {
         adapter.submitList(emptyList())
 
         if (checkConnection(this)) {
-            //binding.swipeRefresh.isRefreshing = true
+            binding.swipeRefresh.isRefreshing = true
 
             vm.motorcycles.collect { motorcycle ->
                 adapter.submitList(motorcycle) {
@@ -129,10 +146,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                //binding.swipeRefresh.isRefreshing = false
+                binding.swipeRefresh.isRefreshing = false
             }
         } else {
-            //binding.swipeRefresh.isRefreshing = false
+            binding.swipeRefresh.isRefreshing = false
             Toast.makeText(
                 this@MainActivity,
                 getString(R.string.txt_noConnection),
@@ -168,7 +185,7 @@ class MainActivity : AppCompatActivity() {
      *
      * @param motorcycle Motocicleta de la lista mostrada.
      */
-    /*private fun showRandomMotorcycle(motorcycle: Motorcycle?) {
+    private fun showRandomMotorcycle(motorcycle: Motorcycle?) {
         if (motorcycle != null) {
             MaterialAlertDialogBuilder(this)
                 .setTitle(motorcycle.make)
@@ -182,5 +199,5 @@ class MainActivity : AppCompatActivity() {
                 .setPositiveButton(getString(R.string.btn_alert_dialog), null)
                 .show()
         }
-    }*/
+    }
 }

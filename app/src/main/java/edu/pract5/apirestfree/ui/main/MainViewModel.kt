@@ -55,7 +55,7 @@ class MainViewModel (
     /**
      * Actualiza el filtro y ordena la lista de palabras combinadas.
      */
-    fun sortMotorcycles() {
+    /*fun sortMotorcycles() {
         motorcyclesFilter =
             if (motorcyclesFilter == MotorcyclesFilter.ALPHA_ASC) {
                 MotorcyclesFilter.ALPHA_DESC
@@ -63,7 +63,7 @@ class MainViewModel (
                 MotorcyclesFilter.ALPHA_ASC
             }
         _motorcycles.value = sortByMotorcyclesFilter(_motorcycles.value)
-    }
+    }*/
 
     /**
      * Insertar o borrar una palabra favorita en la BD local.
@@ -79,12 +79,12 @@ class MainViewModel (
      * Busca en la lista una palabra aleatoria.
      * @return Palabra con nombre y descripción o null.
      */
-    fun getRandomMotorcycle(): Motorcycle? =
+    /*fun getRandomMotorcycle(): Motorcycle? =
         if (isFavouriteMotorcyclesSelected) {
             _motorcycles.value.filter { motorcycle -> motorcycle.favourite }
         } else {
             _motorcycles.value
-        }.randomOrNull()
+        }.randomOrNull()*/
 
     /**
      * Recupera las palabras de la API.

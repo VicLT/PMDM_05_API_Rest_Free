@@ -70,9 +70,9 @@ data class Motorcycle(
     @SerializedName("front_brakes")
     val frontBrakes: String?,
     @SerializedName("front_suspension")
-    val frontSuspension: String,
+    val frontSuspension: String?,
     @SerializedName("front_tire")
-    val frontTire: String,
+    val frontTire: String?,
     @SerializedName("front_wheel_travel")
     val frontWheelTravel: String?,
     @SerializedName("fuel_capacity")
