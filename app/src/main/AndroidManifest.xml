@@ -17,7 +17,7 @@
         android:theme="@style/Theme.APIRESTFREE"
         tools:targetApi="35">
         <activity
-            android:name=".ui.detail.DetailMotorcycleActivity"
+            android:name=".ui.detail.DetailActivity"
             android:parentActivityName=".ui.main.MainActivity"
             android:exported="false">
         </activity>

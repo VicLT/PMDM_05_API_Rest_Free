@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parentLinearLayout"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".ui.detail.DetailMotorcycleActivity">
+    tools:context=".ui.detail.DetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarDetail"
@@ -36,7 +36,7 @@
         android:layout_height="200dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbarDetail"
         android:contentDescription="@string/iv_motorcycle"
         android:src="@drawable/iv_motorcycle"
         tools:src="@drawable/iv_motorcycle" />
@@ -74,6 +74,7 @@
                 android:fontFamily="@font/alegreya_sc_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
+                android:text="@string/txt_year"
                 tools:text="year property" />
 
             <TextView
@@ -100,6 +101,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/txt_type"
                 tools:text="type property" />
 
             <TextView
@@ -127,6 +129,7 @@
                 android:fontFamily="@font/alegreya_sc_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
+                android:text="@string/txt_displacement"
                 tools:text="Displacement property" />
 
             <TextView
@@ -153,6 +156,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/txt_power"
                 tools:text="power property" />
 
             <TextView
@@ -180,6 +184,7 @@
                 android:fontFamily="@font/alegreya_sc_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
+                android:text="@string/txt_torque"
                 tools:text="torque property" />
 
             <TextView
@@ -206,6 +211,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/txt_gearbox"
                 tools:text="gearbox property" />
 
             <TextView
@@ -226,17 +232,18 @@
             android:padding="5dp" >
 
             <TextView
-                android:id="@+id/tv_fronttire_property"
+                android:id="@+id/tv_front_tire_property"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
+                android:text="@string/txt_front_tire"
                 tools:text="front tire property" />
 
             <TextView
-                android:id="@+id/tv_fronttire_data"
+                android:id="@+id/tv_front_tire_data"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -253,16 +260,17 @@
             android:padding="5dp" >
 
             <TextView
-                android:id="@+id/tv_reartire_property"
+                android:id="@+id/tv_rear_tire_property"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/txt_rear_tire"
                 tools:text="rear tire property" />
 
             <TextView
-                android:id="@+id/tv_reartire_data"
+                android:id="@+id/tv_rear_tire_data"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -279,17 +287,18 @@
             android:padding="5dp" >
 
             <TextView
-                android:id="@+id/tv_totalweight_property"
+                android:id="@+id/tv_total_weight_property"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
+                android:text="@string/txt_total_weight"
                 tools:text="total weight property" />
 
             <TextView
-                android:id="@+id/tv_totalweight_data"
+                android:id="@+id/tv_total_weight_data"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

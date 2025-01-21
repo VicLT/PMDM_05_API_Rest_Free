@@ -12,5 +12,15 @@
     <string name="btn_alert_dialog">Accept.</string>
     <string name="warning_title">Error</string>
     <string name="warning_message">There is no favourite motorcycle to display.</string>
-    <string name="txt_make_and_model">%1$s %2$s?</string>
+    <string name="txt_make_and_model">%1$s %2$s</string>
+    <string name="txt_total_weight">Total weight</string>
+    <string name="txt_rear_tire">Rear tire</string>
+    <string name="txt_front_tire">Front tire</string>
+    <string name="txt_gearbox">Gearbox</string>
+    <string name="txt_torque">Torque</string>
+    <string name="txt_power">Power</string>
+    <string name="txt_displacement">Displacement</string>
+    <string name="txt_type">Type</string>
+    <string name="txt_year">Year</string>
+    <string name="txt_back">Back to list</string>
 </resources>

@@ -2,7 +2,6 @@ package edu.pract5.apirestfree.ui.detail
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -11,16 +10,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import edu.pract5.apirestfree.R
 import edu.pract5.apirestfree.databinding.ActivityDetailBinding
 import edu.pract5.apirestfree.models.Motorcycle
+import java.util.Locale
 
 @Suppress("DEPRECATION")
-class DetailMotorcycleActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private val TAG = DetailMotorcycleActivity::class.java.simpleName
+    private val TAG = DetailActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -52,7 +50,7 @@ class DetailMotorcycleActivity : AppCompatActivity() {
             setupDetailView(motorcycle)
         } else {
             Toast.makeText(
-                this@DetailMotorcycleActivity,
+                this@DetailActivity,
                 "No city data",
                 Toast.LENGTH_SHORT
             ).show()
@@ -62,7 +60,7 @@ class DetailMotorcycleActivity : AppCompatActivity() {
     companion object {
         private const val EXTRA_MOTORCYCLE = "motorcycle"
         fun navigateToDetail(activity: Activity, motorcycle: Motorcycle) {
-            activity.startActivity(Intent(activity, DetailMotorcycleActivity::class.java).apply {
+            activity.startActivity(Intent(activity, DetailActivity::class.java).apply {
                 putExtra(EXTRA_MOTORCYCLE, motorcycle)
             })
         }
@@ -70,17 +68,24 @@ class DetailMotorcycleActivity : AppCompatActivity() {
 
     private fun setupDetailView(motorcycle: Motorcycle) {
         binding.tvMakeAndModel.text = String.format(getString(
-            R.string.txt_make_and_model
-        ),
-            motorcycle.make,
-            motorcycle.model
-        )
-
-
+                R.string.txt_make_and_model
+            ),
+                motorcycle.make,
+                motorcycle.model
+            ).uppercase(Locale.getDefault())
+        binding.tvYearData.text = if (motorcycle.year.isNullOrEmpty()) "-" else motorcycle.year
+        binding.tvTypeData.text = if (motorcycle.type.isNullOrEmpty()) "-" else motorcycle.type
+        binding.tvDisplacementData.text = if (motorcycle.displacement.isNullOrEmpty()) "-" else motorcycle.displacement
+        binding.tvPowerData.text = if (motorcycle.power.isNullOrEmpty()) "-" else motorcycle.power
+        binding.tvTorqueData.text = if (motorcycle.torque.isNullOrEmpty()) "-" else motorcycle.torque
+        binding.tvGearboxData.text = if (motorcycle.gearbox.isNullOrEmpty()) "-" else motorcycle.gearbox
+        binding.tvFrontTireData.text = if (motorcycle.frontTire.isNullOrEmpty()) "-" else motorcycle.frontTire
+        binding.tvRearTireData.text = if (motorcycle.rearTire.isNullOrEmpty()) "-" else motorcycle.rearTire
+        binding.tvTotalWeightData.text = if (motorcycle.totalWeight.isNullOrEmpty()) "-" else motorcycle.totalWeight
 
         // Configura la Toolbar y habilita el botón de "volver"
         setSupportActionBar(binding.mToolbarDetail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = R.string.txt_make_and_model.toString()
+        supportActionBar?.title = getString(R.string.txt_back)
     }
 }

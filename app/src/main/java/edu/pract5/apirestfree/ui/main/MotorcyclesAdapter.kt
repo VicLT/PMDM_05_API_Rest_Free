@@ -70,10 +70,10 @@ class MotorcyclesAdapter(
             bind.root.setOnClickListener {
                 onClick(motorcycle)
             }
-            bind.ivFav.setOnClickListener(
+            bind.ivFav.setOnClickListener {
                 onClickFav(motorcycle)
                 notifyItemChanged(adapterPosition)
-            )
+            }
             bind.ivFav.setImageState(
                 intArrayOf(R.attr.state_on),
                 motorcycle.favourite
