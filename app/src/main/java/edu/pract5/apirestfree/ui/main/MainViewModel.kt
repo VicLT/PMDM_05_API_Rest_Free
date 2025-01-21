@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import edu.pract5.apirestfree.data.MotorcyclesRepository
 import edu.pract5.apirestfree.domain.GetMotorcyclesUseCase
 import edu.pract5.apirestfree.domain.GetSortedFavMotorcyclesUseCase
 import edu.pract5.apirestfree.domain.UpdateFavMotorcycleUseCase
@@ -49,7 +48,7 @@ class MainViewModel (
 
     init {
         getFavMotorcycles()
-        getRemoteMotorcycles()
+        getApiMotorcycles()
         getAllMotorcycles()
     }
 
@@ -90,7 +89,7 @@ class MainViewModel (
     /**
      * Recupera las palabras de la API.
      */
-    fun getRemoteMotorcycles() {
+    fun getApiMotorcycles() {
         _apiMotorcycles.value = emptyList()
         viewModelScope.launch {
             getMotorcyclesUseCase.invoke().collect {

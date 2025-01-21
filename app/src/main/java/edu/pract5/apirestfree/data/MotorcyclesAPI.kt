@@ -48,9 +48,9 @@ interface MotorcyclesAPIInterface {
      * @param model The model of the motorcycle to get.
      * @return List of matching motorcycles.
      */
-    @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
+    /*@Headers("X-Api-Key: ${BuildConfig.API_KEY}")
     @GET("v1/motorcycles")
     suspend fun getMotorcyclesByModel(
         @Query("model") model: String,
-    ): List<Motorcycle>
+    ): List<Motorcycle>*/
 }

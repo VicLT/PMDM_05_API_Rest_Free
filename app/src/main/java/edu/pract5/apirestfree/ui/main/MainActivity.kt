@@ -10,6 +10,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import edu.pract5.apirestfree.R
 import edu.pract5.apirestfree.RoomApplication
 import edu.pract5.apirestfree.data.LocalDataSource
@@ -19,7 +21,7 @@ import edu.pract5.apirestfree.databinding.ActivityMainBinding
 import edu.pract5.apirestfree.domain.GetMotorcyclesUseCase
 import edu.pract5.apirestfree.domain.GetSortedFavMotorcyclesUseCase
 import edu.pract5.apirestfree.domain.UpdateFavMotorcycleUseCase
-import edu.pract5.apirestfree.ui.detail.DetailViewModel
+import edu.pract5.apirestfree.models.Motorcycle
 import edu.pract5.apirestfree.utils.checkConnection
 import kotlinx.coroutines.launch
 
@@ -118,13 +120,13 @@ class MainActivity : AppCompatActivity() {
 
             vm.motorcycles.collect { motorcycle ->
                 adapter.submitList(motorcycle) {
-                    /*if (returnToTop) {
+                    if (returnToTop) {
                         binding.recyclerView.scrollToPosition(0)
                     } else if (vm.isFavouriteMotorcyclesSelected) {
                         restoreScrollPosition(currentFavScrollPosition)
                     } else {
                         restoreScrollPosition(currentScrollPosition)
-                    }*/
+                    }
                 }
 
                 //binding.swipeRefresh.isRefreshing = false
@@ -138,4 +140,47 @@ class MainActivity : AppCompatActivity() {
             ).show()
         }
     }
+
+    /**
+     * Guarda la posición actual del RecyclerView.
+     *
+     * @return Posición actual del RecyclerView.
+     */
+    /*private fun saveScrollPosition(): Int {
+        val layoutManager = binding.recyclerView.layoutManager as? LinearLayoutManager
+        return layoutManager?.findFirstVisibleItemPosition() ?: 0
+    }*/
+
+    /**
+     * Restaura la posición guardada en el RecyclerView.
+     *
+     * @param scrollPosition Posición guardada.
+     */
+    private fun restoreScrollPosition(scrollPosition: Int) {
+        binding.recyclerView.post {
+            val layoutManager = binding.recyclerView.layoutManager as? LinearLayoutManager
+            layoutManager?.scrollToPositionWithOffset(scrollPosition, 0)
+        }
+    }
+
+    /**
+     * Muestra una motocicleta (aleatoria) en un MaterialAlertDialog.
+     *
+     * @param motorcycle Motocicleta de la lista mostrada.
+     */
+    /*private fun showRandomMotorcycle(motorcycle: Motorcycle?) {
+        if (motorcycle != null) {
+            MaterialAlertDialogBuilder(this)
+                .setTitle(motorcycle.make)
+                .setMessage(motorcycle.model)
+                .setPositiveButton(getString(R.string.btn_alert_dialog), null)
+                .show()
+        } else {
+            MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.warning_title))
+                .setMessage(getString(R.string.warning_message))
+                .setPositiveButton(getString(R.string.btn_alert_dialog), null)
+                .show()
+        }
+    }*/
 }
