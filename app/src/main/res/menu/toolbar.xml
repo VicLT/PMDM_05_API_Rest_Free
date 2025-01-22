@@ -4,27 +4,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/opt_deactivate_filters"
+        android:id="@+id/opt_menu_about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="@string/txt_opt_deactivate_filters" />
-    <item
-        android:id="@+id/opt_random"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:icon="@drawable/ic_random"
-        android:title="@string/txt_opt_random"
+        android:icon="@drawable/ic_about"
+        android:title="@string/txt_about"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/opt_make_sort"
+        android:id="@+id/opt_menu_random_model"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="@string/txt_opt_make_sort" />
+        android:icon="@drawable/ic_random"
+        android:title="@string/txt_opt_random_model" />
 
     <item
-        android:id="@+id/opt_model_sort"
+        android:id="@+id/opt_menu_sort_by_model"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="@string/txt_opt_model_sort" />
+        android:title="@string/txt_opt_sort_by_model" />
+
+    <item
+        android:id="@+id/opt_menu_sort_by_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/txt_opt_menu_sort_by_year" />
 </menu>

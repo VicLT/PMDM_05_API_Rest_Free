@@ -17,8 +17,8 @@ class LocalDataSource(private val db: MotorcyclesDao) {
      *
      * @param motorcycle Motorcycle marked as favourite.
      */
-    suspend fun saveFavMotorcycle(motorcycle: Motorcycle) {
-        db.saveFavMotorcycle(motorcycle)
+    suspend fun saveLocalMotorcycle(motorcycle: Motorcycle) {
+        db.saveLocalMotorcycle(motorcycle)
     }
 
     /**
@@ -26,8 +26,8 @@ class LocalDataSource(private val db: MotorcyclesDao) {
      *
      * @return Cold flow of ascendant sorted list of favourite motorcycles.
      */
-    fun getAscFavMotorcycles(): Flow<List<Motorcycle>> {
-        return db.getFavMotorcyclesAsc()
+    fun getLocalMotorcyclesSortedByModelAsc(): Flow<List<Motorcycle>> {
+        return db.getLocalMotorcyclesSortedByModelAsc()
     }
 
     /**
@@ -35,15 +35,15 @@ class LocalDataSource(private val db: MotorcyclesDao) {
      *
      * @return Cold flow of descendant sorted list of favourite motorcycles.
      */
-    fun getDescFavMotorcycles(): Flow<List<Motorcycle>> {
-        return db.getFavMotorcyclesDesc()
+    fun getLocalMotorcyclesSortedByModelDesc(): Flow<List<Motorcycle>> {
+        return db.getLocalMotorcyclesSortedByModelDesc()
     }
 
     /**
-     * Elimina una palabra favorita de la BD local.
+     * Deletes a favourite motorcycle from the local DB.
      * @param motorcycle Motorcycle marked as favourite.
      */
-    suspend fun deleteFavMotorcycle(motorcycle: Motorcycle) {
-        db.deleteFavMotorcycle(motorcycle)
+    suspend fun deleteLocalMotorcycle(motorcycle: Motorcycle) {
+        db.deleteLocalMotorcycle(motorcycle)
     }
 }

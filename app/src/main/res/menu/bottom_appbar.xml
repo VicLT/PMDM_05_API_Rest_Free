@@ -2,15 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/opt_allWords"
+        android:id="@+id/opt_all_motorcycles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_helmet"
-        android:title="@string/txt_optBottom_all"/>
+        android:title="@string/txt_opt_all_motorcycles"/>
+
     <item
-        android:id="@+id/opt_favWords"
+        android:id="@+id/opt_delete_motorcycles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/ic_favorite"
-        android:title="@string/txt_favourites"/>
+        android:icon="@drawable/ic_delete"
+        android:title="@string/txt_opt_bottom_deletes"/>
 </menu>

@@ -1,6 +1,5 @@
 package edu.pract5.apirestfree.data
 
-import edu.pract5.apirestfree.models.Motorcycle
 import kotlinx.coroutines.flow.flow
 
 /**
@@ -18,17 +17,7 @@ class RemoteDataSource {
      *
      * @return A flow list of motorcycles.
      */
-    fun getMotorcycles() = flow {
-        emit(api.getMotorcycles())
+    fun getRemoteMotorcyclesByMakeOrModel() = flow {
+        emit(api.getRemoteMotorcyclesByMakeOrModel())
     }
-
-    /**
-     * Gets a list of motorcycles from the API that match the model.
-     *
-     * @param model The model of the motorcycles to get.
-     * @return The list of motorcycles.
-     */
-    /*suspend fun getMotorcyclesByModel(model: String): List<Motorcycle> {
-        return api.getMotorcyclesByModel(model)
-    }*/
 }

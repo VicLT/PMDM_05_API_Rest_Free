@@ -10,19 +10,15 @@ import edu.pract5.apirestfree.models.Motorcycle
  *
  * @param motorcyclesRepository The repository to get the motorcycles.
  */
-class UpdateFavMotorcycleUseCase(
+class DeleteLocalMotorcycleUC(
     private val motorcyclesRepository: MotorcyclesRepository
 ) {
     /**
      * Inserts or deletes a favourite motorcycle in the local DB.
      *
-     * @param favMotorcycle Motorcycle marked as favourite.
+     * @param motorcycle Motorcycle marked as favourite.
      */
-    suspend operator fun invoke(favMotorcycle: Motorcycle) {
-        if (favMotorcycle.favourite) {
-            motorcyclesRepository.saveFavMotorcycle(favMotorcycle)
-        } else {
-            motorcyclesRepository.deleteFavMotorcycle(favMotorcycle)
-        }
+    suspend operator fun invoke(motorcycle: Motorcycle) {
+        motorcyclesRepository.deleteLocalMotorcycle(motorcycle)
     }
 }

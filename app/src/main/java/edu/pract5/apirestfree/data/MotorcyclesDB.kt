@@ -35,23 +35,23 @@ interface MotorcyclesDao {
      * @param motorcycle Motorcycle marked as favourite.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveFavMotorcycle(motorcycle: Motorcycle)
+    suspend fun saveLocalMotorcycle(motorcycle: Motorcycle)
 
     /**
      * Gets all motorcycles from local DB sorted by ascendant make.
      *
      * @return Ascendant sorted list of motorcycles.
      */
-    @Query("SELECT * FROM Motorcycle ORDER BY make ASC")
-    fun getFavMotorcyclesAsc(): Flow<List<Motorcycle>>
+    @Query("SELECT * FROM Motorcycle ORDER BY model ASC")
+    fun getLocalMotorcyclesSortedByModelAsc(): Flow<List<Motorcycle>>
 
     /**
      * Gets all motorcycles from local DB sorted by descendant make.
      *
      * @return Descendant sorted list of motorcycles.
      */
-    @Query("SELECT * FROM Motorcycle ORDER BY make DESC")
-    fun getFavMotorcyclesDesc(): Flow<List<Motorcycle>>
+    @Query("SELECT * FROM Motorcycle ORDER BY model DESC")
+    fun getLocalMotorcyclesSortedByModelDesc(): Flow<List<Motorcycle>>
 
     /**
      * Delete a motorcycle from the local DB.
@@ -59,5 +59,5 @@ interface MotorcyclesDao {
      * @param motorcycle The motorcycle to delete.
      */
     @Delete
-    suspend fun deleteFavMotorcycle(motorcycle: Motorcycle)
+    suspend fun deleteLocalMotorcycle(motorcycle: Motorcycle)
 }

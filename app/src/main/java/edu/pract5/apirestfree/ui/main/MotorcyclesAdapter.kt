@@ -20,7 +20,8 @@ import edu.pract5.apirestfree.models.Motorcycle
  */
 class MotorcyclesAdapter(
     private val onClick: (Motorcycle) -> Unit,
-    private val onClickFav: (Motorcycle) -> Unit
+    private val onClickFav: (Motorcycle) -> Unit,
+    private val onLongClick: (Motorcycle) -> Unit
 ) : ListAdapter<Motorcycle, MotorcyclesAdapter.MotorcyclesViewHolder>(
     MotorcyclesDiffCallback()
 ) {
@@ -65,10 +66,18 @@ class MotorcyclesAdapter(
         private val bind = MotorcycleItemBinding.bind(view)
 
         fun bind(motorcycle: Motorcycle) {
+            bind.tvYear.text = motorcycle.year.toString()
             bind.tvMake.text = motorcycle.make
             bind.tvModel.text = motorcycle.model
+            bind.ivViewed.visibility = if (motorcycle.viewed) View.VISIBLE else View.GONE
             bind.root.setOnClickListener {
                 onClick(motorcycle)
+                notifyItemChanged(adapterPosition)
+            }
+            bind.root.setOnLongClickListener {
+                onLongClick(motorcycle)
+                notifyItemChanged(adapterPosition)
+                true
             }
             bind.ivFav.setOnClickListener {
                 onClickFav(motorcycle)

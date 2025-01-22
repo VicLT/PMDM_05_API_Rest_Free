@@ -27,6 +27,18 @@
             app:menu="@menu/toolbar"
             app:title="@string/app_name"
             app:titleTextColor="?attr/colorOnPrimary" />
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="true"
+            android:queryHint="@string/default_motorcycle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/search_border"
+            android:layout_margin="5dp"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

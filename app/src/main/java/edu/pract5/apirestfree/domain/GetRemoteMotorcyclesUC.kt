@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
  *
  * @param motorcyclesRepository The repository to get the motorcycles.
  */
-class GetMotorcyclesUseCase(
+class GetRemoteMotorcyclesUC(
     private val motorcyclesRepository: MotorcyclesRepository
 ) {
     /**
@@ -20,6 +20,6 @@ class GetMotorcyclesUseCase(
      * @return Cold flow list of motorcycles.
      */
     operator fun invoke(): Flow<List<Motorcycle>> {
-        return motorcyclesRepository.getMotorcycles()
+        return motorcyclesRepository.getRemoteMotorcyclesByMakeOrModel()
     }
 }

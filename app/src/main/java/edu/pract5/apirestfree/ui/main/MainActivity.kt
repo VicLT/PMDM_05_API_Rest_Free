@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.size
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,9 +19,10 @@ import edu.pract5.apirestfree.data.LocalDataSource
 import edu.pract5.apirestfree.data.MotorcyclesRepository
 import edu.pract5.apirestfree.data.RemoteDataSource
 import edu.pract5.apirestfree.databinding.ActivityMainBinding
-import edu.pract5.apirestfree.domain.GetMotorcyclesUseCase
-import edu.pract5.apirestfree.domain.GetSortedFavMotorcyclesUseCase
-import edu.pract5.apirestfree.domain.UpdateFavMotorcycleUseCase
+import edu.pract5.apirestfree.domain.DeleteLocalMotorcycleUC
+import edu.pract5.apirestfree.domain.GetRemoteMotorcyclesUC
+import edu.pract5.apirestfree.domain.GetLocalMotorcyclesSortedByModelUC
+import edu.pract5.apirestfree.domain.UpdateLocalMotorcycleUC
 import edu.pract5.apirestfree.models.Motorcycle
 import edu.pract5.apirestfree.ui.detail.DetailActivity
 import edu.pract5.apirestfree.utils.checkConnection
@@ -36,43 +38,61 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var currentScrollPosition = 0
     private var currentFavScrollPosition = 0
+    private var firstTime = true
 
     private val vm: MainViewModel by viewModels {
         val db = (application as RoomApplication).motorcyclesDB
         val localDataSource = LocalDataSource(db.motorcyclesDao())
         val remoteDataSource = RemoteDataSource()
-        val getMotorcyclesUseCase = GetMotorcyclesUseCase(
+        val getRemoteMotorcyclesUC = GetRemoteMotorcyclesUC(
             MotorcyclesRepository(
                 remoteDataSource,
                 localDataSource
             )
         )
-        val getSortedFavMotorcyclesUseCase = GetSortedFavMotorcyclesUseCase(
+        val getLocalMotorcyclesSortedByModelUC = GetLocalMotorcyclesSortedByModelUC(
             MotorcyclesRepository(
                 remoteDataSource,
                 localDataSource
             )
         )
-        val updateFavMotorcyclesUseCase = UpdateFavMotorcycleUseCase(
+        val updateLocalMotorcycleUC = UpdateLocalMotorcycleUC(
+            MotorcyclesRepository(
+                remoteDataSource,
+                localDataSource
+            )
+        )
+        val deleteLocalMotorcycleUC = DeleteLocalMotorcycleUC(
             MotorcyclesRepository(
                 remoteDataSource,
                 localDataSource
             )
         )
         MainViewModelFactory(
-            getMotorcyclesUseCase,
-            getSortedFavMotorcyclesUseCase,
-            updateFavMotorcyclesUseCase
+            getRemoteMotorcyclesUC,
+            getLocalMotorcyclesSortedByModelUC,
+            updateLocalMotorcycleUC,
+            deleteLocalMotorcycleUC
         )
     }
 
     private val adapter = MotorcyclesAdapter(
         onClick = { motorcycle ->
+            motorcycle.viewed = true
             DetailActivity.navigateToDetail(this@MainActivity, motorcycle)
+            vm.updateLocalMotorcycle(motorcycle)
         },
         onClickFav = { motorcycle ->
             motorcycle.favourite = !motorcycle.favourite
-            vm.updateMotorcycle(motorcycle)
+            vm.updateLocalMotorcycle(motorcycle)
+        },
+        onLongClick = { motorcycle ->
+            Toast.makeText(
+                this@MainActivity,
+                getString(R.string.txt_deleted_motorcycle, motorcycle.model),
+                Toast.LENGTH_SHORT
+            ).show()
+            vm.deleteLocalMotorcycle(motorcycle)
         }
     )
 
@@ -105,6 +125,12 @@ class MainActivity : AppCompatActivity() {
                 drawAllMotorcycles()
             }
         }
+
+        /*lifecycleScope.launch {
+            if (binding.recyclerView.size == 0) {
+                loadRemoteMotorcyclesOnLocalDb()
+            }
+        }*/
     }
 
     override fun onStart() {
@@ -112,14 +138,62 @@ class MainActivity : AppCompatActivity() {
 
         binding.swipeRefresh.setOnRefreshListener {
             if (checkConnection(this)) {
-                vm.getApiMotorcycles()
+                vm.getRemoteMotorcycles()
             } else {
                 binding.swipeRefresh.isRefreshing = false
                 Toast.makeText(
                     this@MainActivity,
-                    getString(R.string.txt_noConnection),
+                    getString(R.string.txt_no_connection),
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+        }
+
+        binding.mToolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.opt_menu_about -> {
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle(getString(R.string.txt_about_title))
+                        .setMessage(getString(R.string.txt_about_description))
+                        .setPositiveButton(getString(R.string.btn_alert_dialog), null)
+                        .show()
+                    true
+                }
+                R.id.opt_menu_random_model -> {
+                    showRandomMotorcycle(vm.getRandomMotorcycle())
+                    true
+                }
+                R.id.opt_menu_sort_by_model -> {
+                    vm.sortMotorcyclesByModel()
+                    currentScrollPosition = 0
+                    currentFavScrollPosition = 0
+                    true
+                }
+                /*R.id.opt_menu_sort_by_year -> {
+                    vm.sortMotorcyclesByYear()
+                    currentScrollPosition = 0
+                    currentFavScrollPosition = 0
+                    true
+                }*/
+                else -> false
+            }
+        }
+
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.opt_all_motorcycles -> {
+                    currentFavScrollPosition = saveScrollPosition()
+                    vm.isFavouriteMotorcyclesSelected = false
+                    binding.swipeRefresh.isEnabled = true
+                    true
+                }
+                R.id.opt_delete_motorcycles -> {
+                    currentScrollPosition = saveScrollPosition()
+                    vm.isFavouriteMotorcyclesSelected = true
+                    binding.swipeRefresh.isEnabled = false
+                    true
+                }
+                else -> false
             }
         }
     }
@@ -153,7 +227,7 @@ class MainActivity : AppCompatActivity() {
             binding.swipeRefresh.isRefreshing = false
             Toast.makeText(
                 this@MainActivity,
-                getString(R.string.txt_noConnection),
+                getString(R.string.txt_no_connection),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -164,10 +238,10 @@ class MainActivity : AppCompatActivity() {
      *
      * @return Posición actual del RecyclerView.
      */
-    /*private fun saveScrollPosition(): Int {
+    private fun saveScrollPosition(): Int {
         val layoutManager = binding.recyclerView.layoutManager as? LinearLayoutManager
         return layoutManager?.findFirstVisibleItemPosition() ?: 0
-    }*/
+    }
 
     /**
      * Restaura la posición guardada en el RecyclerView.

@@ -28,9 +28,16 @@ fun checkConnection(context: Context): Boolean {
     return false
 }
 
-enum class MotorcyclesFilter {
+enum class ModelMotorcyclesFilter {
     ALPHA_ASC,
     ALPHA_DESC
 }
 
-var motorcyclesFilter = MotorcyclesFilter.ALPHA_ASC
+var modelMotorcyclesFilter = ModelMotorcyclesFilter.ALPHA_ASC
+
+enum class YearMotorcyclesFilter {
+    NUMBER_ASC,
+    NUMBER_DESC
+}
+
+var yearMotorcyclesFilter = YearMotorcyclesFilter.NUMBER_ASC

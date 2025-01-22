@@ -1,7 +1,7 @@
 package edu.pract5.apirestfree.data
 
 import edu.pract5.apirestfree.models.Motorcycle
-import edu.pract5.apirestfree.utils.MotorcyclesFilter
+import edu.pract5.apirestfree.utils.ModelMotorcyclesFilter
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -21,8 +21,8 @@ class MotorcyclesRepository (
      *
      * @return Cold flow list of motorcycles.
      */
-    fun getMotorcycles(): Flow<List<Motorcycle>> {
-        return remoteDataSource.getMotorcycles()
+    fun getRemoteMotorcyclesByMakeOrModel(): Flow<List<Motorcycle>> {
+        return remoteDataSource.getRemoteMotorcyclesByMakeOrModel()
     }
 
     /**
@@ -31,28 +31,28 @@ class MotorcyclesRepository (
      * @param filter Ascendant or descendant sorting filter.
      * @return Cold flow list of favourite motorcycles.
      */
-    fun getSortedFavMotorcycles(filter: MotorcyclesFilter): Flow<List<Motorcycle>> {
+    fun getLocalMotorcyclesSortedByModel(filter: ModelMotorcyclesFilter): Flow<List<Motorcycle>> {
         return when (filter) {
-            MotorcyclesFilter.ALPHA_ASC -> localDataSource.getAscFavMotorcycles()
-            MotorcyclesFilter.ALPHA_DESC -> localDataSource.getDescFavMotorcycles()
+            ModelMotorcyclesFilter.ALPHA_ASC -> localDataSource.getLocalMotorcyclesSortedByModelAsc()
+            ModelMotorcyclesFilter.ALPHA_DESC -> localDataSource.getLocalMotorcyclesSortedByModelDesc()
         }
     }
 
     /**
      * Inserts a favourite motorcycle in the local DB.
      *
-     * @param favMotorcycle Motorcycle marked as favourite.
+     * @param motorcycle Motorcycle marked as favourite.
      */
-    suspend fun saveFavMotorcycle(favMotorcycle: Motorcycle) {
-        localDataSource.saveFavMotorcycle(favMotorcycle)
+    suspend fun saveLocalMotorcycle(motorcycle: Motorcycle) {
+        localDataSource.saveLocalMotorcycle(motorcycle)
     }
 
     /**
      * Deletes a favourite motorcycle in the local DB.
      *
-     * @param favMotorcycle Motorcycle marked as favourite.
+     * @param motorcycle Motorcycle marked as favourite.
      */
-    suspend fun deleteFavMotorcycle(favMotorcycle: Motorcycle) {
-        localDataSource.deleteFavMotorcycle(favMotorcycle)
+    suspend fun deleteLocalMotorcycle(motorcycle: Motorcycle) {
+        localDataSource.deleteLocalMotorcycle(motorcycle)
     }
 }
