@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTintMode="add"
+    android:foregroundTintMode="add"
     android:orientation="horizontal"
     tools:context=".ui.detail.DetailActivity">
 
@@ -34,56 +35,58 @@
         android:id="@+id/iv_motorcycle"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbarDetail"
-        app:layout_constraintBottom_toBottomOf="@id/iv_arrow_down"
         android:contentDescription="@string/iv_motorcycle"
         android:src="@drawable/ic_motorcycle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbarDetail"
         tools:src="@drawable/ic_motorcycle" />
 
     <ImageView
-        android:id="@+id/iv_arrow_down"
+        android:id="@+id/iv_fav"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/iv_image_search"
-        app:layout_constraintTop_toBottomOf="@id/iv_motorcycle"
-        app:layout_constraintBottom_toTopOf="@id/tv_make_and_model"
-        android:contentDescription="@string/iv_motorcycle"
-        android:src="@drawable/ic_arrow_down"
-        tools:src="@drawable/ic_arrow_down" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/txt_desc_fav"
+        app:layout_constraintTop_toBottomOf="@id/appbarDetail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/favourite" />
 
     <ImageView
         android:id="@+id/iv_image_search"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@id/iv_arrow_down"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_arrow_down"
-        app:layout_constraintBottom_toTopOf="@id/tv_make_and_model"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:backgroundTint="@color/mr_cast_progressbar_progress_and_thumb_dark"
         android:contentDescription="@string/iv_motorcycle"
         android:src="@drawable/ic_image_search"
-        tools:src="@drawable/ic_image_search" />
+        app:layout_constraintTop_toTopOf="@id/tv_make_and_model"
+        app:layout_constraintBottom_toBottomOf="@id/tv_make_and_model"
+        app:layout_constraintEnd_toStartOf="@id/tv_make_and_model"/>
 
     <TextView
         android:id="@+id/tv_make_and_model"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alegreya_sc_medium"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#0000ff"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@id/tl_data"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_arrow_down"
+        app:layout_constraintTop_toBottomOf="@id/iv_motorcycle"
         tools:text="MAKE AND MODEL" />
 
     <TableLayout
+        android:id="@+id/tl_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_make_and_model"
-        android:layout_margin="10dp" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_image_search">
 
         <TableRow
             android:layout_width="match_parent"
@@ -97,9 +100,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
+                android:text="@string/txt_year"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
-                android:text="@string/txt_year"
                 tools:text="year property" />
 
             <TextView
@@ -117,7 +120,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/tv_type_property"
@@ -125,8 +128,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:text="@string/txt_type"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="type property" />
 
             <TextView
@@ -144,7 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/tv_displacement_property"
@@ -152,9 +155,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
+                android:text="@string/txt_displacement"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
-                android:text="@string/txt_displacement"
                 tools:text="Displacement property" />
 
             <TextView
@@ -172,7 +175,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/tv_power_property"
@@ -180,8 +183,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:text="@string/txt_power"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="power property" />
 
             <TextView
@@ -199,7 +202,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/tv_torque_property"
@@ -207,9 +210,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
+                android:text="@string/txt_torque"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
-                android:text="@string/txt_torque"
                 tools:text="torque property" />
 
             <TextView
@@ -227,7 +230,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/tv_gearbox_property"
@@ -235,8 +238,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:text="@string/txt_gearbox"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="gearbox property" />
 
             <TextView
@@ -254,7 +257,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/tv_front_tire_property"
@@ -262,9 +265,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
+                android:text="@string/txt_front_tire"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
-                android:text="@string/txt_front_tire"
                 tools:text="front tire property" />
 
             <TextView
@@ -282,7 +285,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/tv_rear_tire_property"
@@ -290,8 +293,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:text="@string/txt_rear_tire"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="rear tire property" />
 
             <TextView
@@ -309,7 +312,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/tv_total_weight_property"
@@ -317,9 +320,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sc_medium"
+                android:text="@string/txt_total_weight"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
-                android:text="@string/txt_total_weight"
                 tools:text="total weight property" />
 
             <TextView
