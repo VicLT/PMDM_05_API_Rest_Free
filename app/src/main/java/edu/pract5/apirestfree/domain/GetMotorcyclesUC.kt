@@ -4,6 +4,7 @@ import edu.pract5.apirestfree.data.MotorcyclesRepository
 import edu.pract5.apirestfree.models.Motorcycle
 import edu.pract5.apirestfree.utils.MotorcyclesFilter
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 
 class GetMotorcyclesUC(
     private val motorcyclesRepository: MotorcyclesRepository
@@ -15,19 +16,19 @@ class GetMotorcyclesUC(
      * @return Cold flow list of favourite motorcycles.
      */
     suspend operator fun invoke(filter: MotorcyclesFilter? = null): Flow<List<Motorcycle>> {
-            motorcyclesRepository.getLocalMotorcycles().collect { localMotorcycles ->
-                if (localMotorcycles.isEmpty()) {
-                    motorcyclesRepository.getRemoteMotorcycles().collect { motorcycles ->
-                        motorcycles.forEach { motorcycle ->
-                            motorcyclesRepository.saveLocalMotorcycle(motorcycle)
-                        }
+        motorcyclesRepository.getLocalMotorcycles().onEach { localMotorcycles ->
+            if (localMotorcycles.isEmpty()) {
+                motorcyclesRepository.getRemoteMotorcycles().collect { motorcycles ->
+                    motorcycles.forEach { motorcycle ->
+                        motorcyclesRepository.saveLocalMotorcycle(motorcycle)
                     }
                 }
-                if (filter == null) {
-                    motorcyclesRepository.getLocalMotorcycles()
-                } else {
-                    motorcyclesRepository.getLocalMotorcyclesSortedByModel(filter)
-                }
             }
+            if (filter == null) {
+                motorcyclesRepository.getLocalMotorcycles()
+            } else {
+                motorcyclesRepository.getLocalMotorcyclesSortedByModel(filter)
+            }
+        }
     }
 }
