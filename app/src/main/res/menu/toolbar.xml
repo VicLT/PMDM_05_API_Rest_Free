@@ -16,17 +16,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_random"
-        android:title="@string/txt_opt_random_model" />
+        android:title="@string/txt_opt_random_model"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/opt_menu_sort_by_model"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="@string/txt_opt_sort_by_model" />
-
-    <item
-        android:id="@+id/opt_menu_sort_by_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:title="@string/txt_opt_menu_sort_by_year" />
+        android:icon="@drawable/ic_sort"
+        android:title="@string/txt_opt_sort_by_model"
+        app:showAsAction="ifRoom"/>
 </menu>

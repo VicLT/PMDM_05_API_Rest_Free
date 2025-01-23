@@ -7,10 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.size
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import edu.pract5.apirestfree.R
@@ -20,9 +17,9 @@ import edu.pract5.apirestfree.data.MotorcyclesRepository
 import edu.pract5.apirestfree.data.RemoteDataSource
 import edu.pract5.apirestfree.databinding.ActivityMainBinding
 import edu.pract5.apirestfree.domain.DeleteLocalMotorcycleUC
+import edu.pract5.apirestfree.domain.GetLocalMotorcyclesUC
 import edu.pract5.apirestfree.domain.GetRemoteMotorcyclesUC
-import edu.pract5.apirestfree.domain.GetLocalMotorcyclesSortedByModelUC
-import edu.pract5.apirestfree.domain.UpdateLocalMotorcycleUC
+import edu.pract5.apirestfree.domain.SaveLocalMotorcycleUC
 import edu.pract5.apirestfree.models.Motorcycle
 import edu.pract5.apirestfree.ui.detail.DetailActivity
 import edu.pract5.apirestfree.utils.checkConnection
@@ -38,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var currentScrollPosition = 0
     private var currentFavScrollPosition = 0
-    private var firstTime = true
 
     private val vm: MainViewModel by viewModels {
         val db = (application as RoomApplication).motorcyclesDB
@@ -50,13 +46,13 @@ class MainActivity : AppCompatActivity() {
                 localDataSource
             )
         )
-        val getLocalMotorcyclesSortedByModelUC = GetLocalMotorcyclesSortedByModelUC(
+        val getLocalMotorcyclesSortedByModelUC = GetLocalMotorcyclesUC(
             MotorcyclesRepository(
                 remoteDataSource,
                 localDataSource
             )
         )
-        val updateLocalMotorcycleUC = UpdateLocalMotorcycleUC(
+        val updateLocalMotorcycleUC = SaveLocalMotorcycleUC(
             MotorcyclesRepository(
                 remoteDataSource,
                 localDataSource
@@ -80,11 +76,11 @@ class MainActivity : AppCompatActivity() {
         onClick = { motorcycle ->
             motorcycle.viewed = true
             DetailActivity.navigateToDetail(this@MainActivity, motorcycle)
-            vm.updateLocalMotorcycle(motorcycle)
+            vm.saveLocalMotorcycle(motorcycle)
         },
         onClickFav = { motorcycle ->
             motorcycle.favourite = !motorcycle.favourite
-            vm.updateLocalMotorcycle(motorcycle)
+            vm.saveLocalMotorcycle(motorcycle)
         },
         onLongClick = { motorcycle ->
             Toast.makeText(
@@ -121,16 +117,8 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                drawAllMotorcycles()
-            }
+            drawAllMotorcycles()
         }
-
-        /*lifecycleScope.launch {
-            if (binding.recyclerView.size == 0) {
-                loadRemoteMotorcyclesOnLocalDb()
-            }
-        }*/
     }
 
     override fun onStart() {
@@ -138,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.swipeRefresh.setOnRefreshListener {
             if (checkConnection(this)) {
-                vm.getRemoteMotorcycles()
+                vm.resetMotorcycles()
             } else {
                 binding.swipeRefresh.isRefreshing = false
                 Toast.makeText(
@@ -160,26 +148,20 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.opt_menu_random_model -> {
-                    showRandomMotorcycle(vm.getRandomMotorcycle())
+                    //showRandomMotorcycle(vm.getRandomMotorcycle())
                     true
                 }
                 R.id.opt_menu_sort_by_model -> {
-                    vm.sortMotorcyclesByModel()
+                    //vm.sortMotorcyclesByModel()
                     currentScrollPosition = 0
                     currentFavScrollPosition = 0
                     true
                 }
-                /*R.id.opt_menu_sort_by_year -> {
-                    vm.sortMotorcyclesByYear()
-                    currentScrollPosition = 0
-                    currentFavScrollPosition = 0
-                    true
-                }*/
                 else -> false
             }
         }
 
-        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+        /*binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.opt_all_motorcycles -> {
                     currentFavScrollPosition = saveScrollPosition()
@@ -195,7 +177,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-        }
+        }*/
     }
 
     /**
@@ -210,12 +192,12 @@ class MainActivity : AppCompatActivity() {
         if (checkConnection(this)) {
             binding.swipeRefresh.isRefreshing = true
 
-            vm.motorcycles.collect { motorcycle ->
+            vm.localMotorcycles.collect { motorcycle ->
                 adapter.submitList(motorcycle) {
                     if (returnToTop) {
                         binding.recyclerView.scrollToPosition(0)
-                    } else if (vm.isFavouriteMotorcyclesSelected) {
-                        restoreScrollPosition(currentFavScrollPosition)
+                    /*} else if (vm.isFavouriteMotorcyclesSelected) {
+                        restoreScrollPosition(currentFavScrollPosition)*/
                     } else {
                         restoreScrollPosition(currentScrollPosition)
                     }

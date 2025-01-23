@@ -1,7 +1,7 @@
 package edu.pract5.apirestfree.data
 
 import edu.pract5.apirestfree.models.Motorcycle
-import edu.pract5.apirestfree.utils.ModelMotorcyclesFilter
+import edu.pract5.apirestfree.utils.MotorcyclesFilter
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -21,9 +21,21 @@ class MotorcyclesRepository (
      *
      * @return Cold flow list of motorcycles.
      */
-    fun getRemoteMotorcyclesByMakeOrModel(): Flow<List<Motorcycle>> {
-        return remoteDataSource.getRemoteMotorcyclesByMakeOrModel()
+    suspend fun getRemoteMotorcyclesByMakeOrModel(model: String): Flow<List<Motorcycle>> {
+        return remoteDataSource.getRemoteMotorcyclesByMakeOrModel(model)
     }
+
+    suspend fun getRemoteMotorcycles(): Flow<List<Motorcycle>> {
+        return remoteDataSource.getRemoteMotorcycles()
+    }
+
+    fun getLocalMotorcycles(): Flow<List<Motorcycle>> {
+        return localDataSource.getLocalMotorcycles()
+    }
+
+    /*fun getLocalMotorcyclesByModel(model: String): Flow<List<Motorcycle>> {
+        return localDataSource.getLocalMotorcyclesByModel(model)
+    }*/
 
     /**
      * Get the complete sorted list of favourite motorcycles from the local DB.
@@ -31,10 +43,10 @@ class MotorcyclesRepository (
      * @param filter Ascendant or descendant sorting filter.
      * @return Cold flow list of favourite motorcycles.
      */
-    fun getLocalMotorcyclesSortedByModel(filter: ModelMotorcyclesFilter): Flow<List<Motorcycle>> {
+    fun getLocalMotorcyclesSortedByModel(filter: MotorcyclesFilter): Flow<List<Motorcycle>> {
         return when (filter) {
-            ModelMotorcyclesFilter.ALPHA_ASC -> localDataSource.getLocalMotorcyclesSortedByModelAsc()
-            ModelMotorcyclesFilter.ALPHA_DESC -> localDataSource.getLocalMotorcyclesSortedByModelDesc()
+            MotorcyclesFilter.ALPHA_ASC -> localDataSource.getLocalMotorcyclesSortedByModelAsc()
+            MotorcyclesFilter.ALPHA_DESC -> localDataSource.getLocalMotorcyclesSortedByModelDesc()
         }
     }
 
@@ -54,5 +66,9 @@ class MotorcyclesRepository (
      */
     suspend fun deleteLocalMotorcycle(motorcycle: Motorcycle) {
         localDataSource.deleteLocalMotorcycle(motorcycle)
+    }
+
+    suspend fun deleteAllLocalMotorcycles() {
+        localDataSource.deleteAllLocalMotorcycles()
     }
 }

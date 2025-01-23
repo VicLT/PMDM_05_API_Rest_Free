@@ -1,8 +1,6 @@
 package edu.pract5.apirestfree.ui.detail
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import edu.pract5.apirestfree.data.MotorcyclesRepository
 
 /**
  * Class DetailViewModel.kt

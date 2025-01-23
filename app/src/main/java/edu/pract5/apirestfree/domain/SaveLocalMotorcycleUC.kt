@@ -10,7 +10,7 @@ import edu.pract5.apirestfree.models.Motorcycle
  *
  * @param motorcyclesRepository The repository to get the motorcycles.
  */
-class UpdateLocalMotorcycleUC(
+class SaveLocalMotorcycleUC(
     private val motorcyclesRepository: MotorcyclesRepository
 ) {
     /**

@@ -22,8 +22,6 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:background="@color/black"
-            app:layout_scrollEffect="compress"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
             app:menu="@menu/toolbar"
             app:title="@string/app_name"
             app:titleTextColor="?attr/colorOnPrimary" />
@@ -69,5 +67,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:menu="@menu/bottom_appbar" />
+        app:menu="@menu/bottom_appbar"
+        tools:ignore="VisualLintBottomNav" />
 </androidx.constraintlayout.widget.ConstraintLayout>

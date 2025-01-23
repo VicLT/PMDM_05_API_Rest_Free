@@ -3,6 +3,7 @@ package edu.pract5.apirestfree.data
 import edu.pract5.apirestfree.BuildConfig
 import edu.pract5.apirestfree.data.MotorcyclesAPI.Companion.BASE_URL
 import edu.pract5.apirestfree.models.Motorcycle
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -44,5 +45,11 @@ interface MotorcyclesAPIInterface {
     suspend fun getRemoteMotorcyclesByMakeOrModel(
         @Query("make") make: String = " ",
         @Query("model") model: String = " "
-    ): List<Motorcycle>
+    ): Flow<List<Motorcycle>>
+
+    @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
+    @GET("v1/motorcycles")
+    suspend fun getRemoteMotorcycles(
+        @Query("make") make: String = " "
+    ): Flow<List<Motorcycle>>
 }

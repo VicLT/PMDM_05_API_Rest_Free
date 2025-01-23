@@ -18,7 +18,11 @@ class DeleteLocalMotorcycleUC(
      *
      * @param motorcycle Motorcycle marked as favourite.
      */
-    suspend operator fun invoke(motorcycle: Motorcycle) {
-        motorcyclesRepository.deleteLocalMotorcycle(motorcycle)
+    suspend operator fun invoke(motorcycle: Motorcycle? = null) {
+        return if (motorcycle == null) {
+            motorcyclesRepository.deleteAllLocalMotorcycles()
+        } else {
+            motorcyclesRepository.deleteLocalMotorcycle(motorcycle)
+        }
     }
 }

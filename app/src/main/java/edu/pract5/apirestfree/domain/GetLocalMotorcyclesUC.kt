@@ -2,7 +2,7 @@ package edu.pract5.apirestfree.domain
 
 import edu.pract5.apirestfree.data.MotorcyclesRepository
 import edu.pract5.apirestfree.models.Motorcycle
-import edu.pract5.apirestfree.utils.ModelMotorcyclesFilter
+import edu.pract5.apirestfree.utils.MotorcyclesFilter
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
  *
  * @param motorcyclesRepository The repository to get the motorcycles.
  */
-class GetLocalMotorcyclesSortedByModelUC(
+class GetLocalMotorcyclesUC(
     private val motorcyclesRepository: MotorcyclesRepository
 ) {
     /**
@@ -21,7 +21,11 @@ class GetLocalMotorcyclesSortedByModelUC(
      * @param filter Ascendant or descendant sorting filter.
      * @return Cold flow list of favourite motorcycles.
      */
-    operator fun invoke(filter: ModelMotorcyclesFilter): Flow<List<Motorcycle>> {
-        return motorcyclesRepository.getLocalMotorcyclesSortedByModel(filter)
+    operator fun invoke(filter: MotorcyclesFilter? = null): Flow<List<Motorcycle>> {
+        return if (filter == null) {
+            motorcyclesRepository.getLocalMotorcycles()
+        } else {
+            motorcyclesRepository.getLocalMotorcyclesSortedByModel(filter)
+        }
     }
 }

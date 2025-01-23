@@ -2,7 +2,6 @@ package edu.pract5.apirestfree.domain
 
 import edu.pract5.apirestfree.data.MotorcyclesRepository
 import edu.pract5.apirestfree.models.Motorcycle
-import kotlinx.coroutines.flow.Flow
 
 /**
  * Class GetRemoteMotorcyclesUseCase.kt
@@ -19,7 +18,14 @@ class GetRemoteMotorcyclesUC(
      *
      * @return Cold flow list of motorcycles.
      */
-    operator fun invoke(): Flow<List<Motorcycle>> {
-        return motorcyclesRepository.getRemoteMotorcyclesByMakeOrModel()
+    /*suspend operator fun invoke(model: String? = null): List<Motorcycle> {
+        return if (!model.isNullOrEmpty()) {
+            motorcyclesRepository.getRemoteMotorcyclesByMakeOrModel(model)
+        } else {
+            motorcyclesRepository.getRemoteMotorcyclesByMakeOrModel(" ")
+        }
+    }*/
+    suspend operator fun invoke(): List<Motorcycle> {
+        return motorcyclesRepository.getRemoteMotorcycles()
     }
 }

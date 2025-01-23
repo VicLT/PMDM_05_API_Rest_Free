@@ -21,6 +21,14 @@ class LocalDataSource(private val db: MotorcyclesDao) {
         db.saveLocalMotorcycle(motorcycle)
     }
 
+    fun getLocalMotorcycles(): Flow<List<Motorcycle>> {
+        return db.getLocalMotorcycles()
+    }
+
+    /*fun getLocalMotorcyclesByModel(model: String): Flow<List<Motorcycle>> {
+        return db.getLocalMotorcyclesByModel(model)
+    }*/
+
     /**
      * Get the list of favourite motorcycles from the local DB by ascending sort.
      *
@@ -45,5 +53,9 @@ class LocalDataSource(private val db: MotorcyclesDao) {
      */
     suspend fun deleteLocalMotorcycle(motorcycle: Motorcycle) {
         db.deleteLocalMotorcycle(motorcycle)
+    }
+
+    suspend fun deleteAllLocalMotorcycles() {
+        db.deleteAllLocalMotorcycles()
     }
 }
