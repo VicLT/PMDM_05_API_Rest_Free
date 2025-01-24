@@ -45,9 +45,15 @@ class MainActivity : AppCompatActivity() {
         onClickDetail = { motorcycle ->
             DetailActivity.navigateToDetail(this@MainActivity, motorcycle)
         },
-        onClickRestoreOrDelete = { motorcycle ->
+        onClickDelete = { motorcycle ->
             motorcycle.deleted = !motorcycle.deleted
             vm.updateMotorcycle(motorcycle)
+            if (vm.areDeletedMotorcyclesSelected) {
+                vm.addMotorcycle(motorcycle)
+            } else {
+                vm.deleteMotorcycle(motorcycle)
+            }
+
         }
     )
 
@@ -129,13 +135,13 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.opt_all_motorcycles -> {
                     currentDeletedScrollPosition = saveScrollPosition()
-                    vm.isDeletedMotorcycleSelected = false
+                    vm.areDeletedMotorcyclesSelected = false
                     binding.swipeRefresh.isEnabled = true
                     true
                 }
                 R.id.opt_deleted_motorcycles -> {
                     currentScrollPosition = saveScrollPosition()
-                    vm.isDeletedMotorcycleSelected = true
+                    vm.areDeletedMotorcyclesSelected = true
                     binding.swipeRefresh.isEnabled = false
                     true
                 }
@@ -160,7 +166,7 @@ class MainActivity : AppCompatActivity() {
                 adapter.submitList(motorcycles) {
                     if (returnToTop) {
                         binding.recyclerView.scrollToPosition(0)
-                    } else if (vm.isDeletedMotorcycleSelected) {
+                    } else if (vm.areDeletedMotorcyclesSelected) {
                         restoreScrollPosition(currentDeletedScrollPosition)
                     } else {
                         restoreScrollPosition(currentScrollPosition)

@@ -26,15 +26,6 @@ class MotorcyclesRepository (
     }
 
     /**
-     * Get the complete list of deleted motorcycles from the local DB.
-     *
-     * @return Cold flow list of deleted motorcycles.
-     */
-    /*fun getLocalMotorcycles(): Flow<List<Motorcycle>> {
-        return localDataSource.getLocalMotorcycles()
-    }*/
-
-    /**
      * Get the complete sorted list of deleted motorcycles from the local DB.
      *
      * @param filter Ascendant or descendant sorting filter.

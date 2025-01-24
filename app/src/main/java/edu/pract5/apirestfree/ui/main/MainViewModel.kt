@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
  * @param repository It allows retrieving all motorcycles and their properties.
  */
 class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel() {
-    var isDeletedMotorcycleSelected: Boolean = false
+    var areDeletedMotorcyclesSelected: Boolean = false
         set(value) {
             field = value
             _motorcycles.value = sortByMotorcyclesFilter(
@@ -42,6 +42,24 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
         getDeletedMotorcycles()
         getRemoteMotorcycles()
         getAllMotorcycles()
+    }
+
+    fun deleteMotorcycle(motorcycle: Motorcycle) {
+        if (motorcycle.deleted) {
+            viewModelScope.launch {
+                _remoteMotorcycles.value = _remoteMotorcycles.value.filter {
+                    it != motorcycle
+                }
+            }
+        }
+    }
+
+    fun addMotorcycle(motorcycle: Motorcycle) {
+        if (!motorcycle.deleted) {
+            viewModelScope.launch {
+                _remoteMotorcycles.value += motorcycle
+            }
+        }
     }
 
     /**
@@ -74,7 +92,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
      * @return Object motorcycle or null.
      */
     fun getRandomMotorcycle(): Motorcycle? =
-        if (isDeletedMotorcycleSelected) {
+        if (areDeletedMotorcyclesSelected) {
             _motorcycles.value.filter { motorcycle -> motorcycle.deleted }
         } else {
             _motorcycles.value
@@ -121,7 +139,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
             }.catch { exception ->
                 Log.e("MainViewModel", exception.message.toString())
             }.collect { motorcycles ->
-                _motorcycles.value = if (isDeletedMotorcycleSelected) {
+                _motorcycles.value = if (areDeletedMotorcyclesSelected) {
                     sortByMotorcyclesFilter(motorcycles.filter { motorcycle
                         -> motorcycle.deleted
                     })

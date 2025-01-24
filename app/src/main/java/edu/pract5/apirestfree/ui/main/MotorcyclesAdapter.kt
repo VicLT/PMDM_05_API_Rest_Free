@@ -15,11 +15,11 @@ import edu.pract5.apirestfree.models.Motorcycle
  * @author Víctor Lamas
  *
  * @param onClickDetail Function that is executed when you click on a motorcycle item.
- * @param onClickRestoreOrDelete Function that is executed by clicking on the delete icon.
+ * @param onClickDelete Function that is executed by clicking on the delete icon.
  */
 class MotorcyclesAdapter(
     private val onClickDetail: (Motorcycle) -> Unit,
-    private val onClickRestoreOrDelete: (Motorcycle) -> Unit,
+    private val onClickDelete: (Motorcycle) -> Unit,
 ) : ListAdapter<Motorcycle, MotorcyclesAdapter.MotorcyclesViewHolder>(
     MotorcyclesDiffCallback()
 ) {
@@ -72,7 +72,7 @@ class MotorcyclesAdapter(
                 onClickDetail(motorcycle)
             }
             bind.icDelete.setOnClickListener {
-                onClickRestoreOrDelete(motorcycle)
+                onClickDelete(motorcycle)
                 notifyItemChanged(adapterPosition)
             }
         }
