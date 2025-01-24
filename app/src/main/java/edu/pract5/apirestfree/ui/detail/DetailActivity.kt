@@ -44,11 +44,8 @@ class DetailActivity : AppCompatActivity() {
                 intent.getParcelableExtra(EXTRA_MOTORCYCLE)
             }
 
-        Log.d("MOTO", "detail: $motorcycle")
-
         if (motorcycle != null) {
             setupDetailView(motorcycle)
-            //updateFavorites(motorcycle)
         } else {
             Toast.makeText(
                 this@DetailActivity,

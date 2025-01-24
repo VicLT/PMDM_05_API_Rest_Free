@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
                     binding.swipeRefresh.isEnabled = true
                     true
                 }
-                R.id.opt_delete_motorcycles -> {
+                R.id.opt_deleted_motorcycles -> {
                     currentScrollPosition = saveScrollPosition()
                     vm.isDeletedMotorcycleSelected = true
                     binding.swipeRefresh.isEnabled = false

@@ -112,8 +112,8 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
             combine(_remoteMotorcycles, _deletedMotorcycles) { remoteMotorcycles, deletedMotorcycles ->
                 remoteMotorcycles.map { remoteMotorcycle ->
                     remoteMotorcycle.apply {
-                        deleted = deletedMotorcycles.any { deleteMotorcycle ->
-                            deleteMotorcycle.id == remoteMotorcycle.id }
+                        deleted = deletedMotorcycles.any { deletedMotorcycle ->
+                            deletedMotorcycle.id == remoteMotorcycle.id }
                     }
                 }
             }.catch { exception ->

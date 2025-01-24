@@ -9,7 +9,7 @@
         android:title="@string/txt_opt_all_motorcycles"/>
 
     <item
-        android:id="@+id/opt_delete_motorcycles"
+        android:id="@+id/opt_deleted_motorcycles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_delete"
