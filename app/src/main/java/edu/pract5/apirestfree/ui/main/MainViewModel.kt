@@ -22,9 +22,7 @@ import kotlinx.coroutines.launch
  *
  * @param repository It allows retrieving all motorcycles and their properties.
  */
-class MainViewModel (
-    private val repository: MotorcyclesRepository
-) : ViewModel() {
+class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel() {
     var isDeletedMotorcycleSelected: Boolean = false
         set(value) {
             field = value

@@ -68,14 +68,17 @@ class MotorcyclesAdapter(
             bind.tvMake.text = motorcycle.make
             bind.tvModel.text = motorcycle.model
 
-            bind.icRestore.visibility = if (motorcycle.deleted) View.GONE else View.VISIBLE
-            bind.icDelete.visibility = if (motorcycle.deleted) View.VISIBLE else View.GONE
+            bind.icDelete.visibility = if (motorcycle.deleted) View.GONE else View.VISIBLE
+            bind.icRestore.visibility = if (motorcycle.deleted) View.VISIBLE else View.GONE
 
             bind.root.setOnClickListener {
                 onClickDetail(motorcycle)
-                notifyItemChanged(adapterPosition)
             }
             bind.icRestore.setOnClickListener {
+                onClickRestoreOrDelete(motorcycle)
+                notifyItemChanged(adapterPosition)
+            }
+            bind.icDelete.setOnClickListener {
                 onClickRestoreOrDelete(motorcycle)
                 notifyItemChanged(adapterPosition)
             }
