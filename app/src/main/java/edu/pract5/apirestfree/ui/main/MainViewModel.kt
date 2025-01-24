@@ -45,7 +45,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     }
 
     /**
-     * Actualiza el filtro y ordena la lista de palabras combinadas.
+     * Updates the filter and sorts the list of combined motorcycles.
      */
     fun sortMotorcycles() {
         motorcyclesFilter =
@@ -58,8 +58,9 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     }
 
     /**
-     * Insertar o borrar una palabra favorita en la BD local.
-     * @param motorcycle Id, nombre, descripción y estado favorita.
+     * Insert or delete a deleted motorcycle in the local DB.
+     *
+     * @param motorcycle Object wit their properties.
      */
     fun updateMotorcycle(motorcycle: Motorcycle) {
         viewModelScope.launch {
@@ -68,8 +69,9 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     }
 
     /**
-     * Busca en la lista una palabra aleatoria.
-     * @return Palabra con nombre y descripción o null.
+     * Search in the list for a random motorcycle.
+     *
+     * @return Object motorcycle or null.
      */
     fun getRandomMotorcycle(): Motorcycle? =
         if (isDeletedMotorcycleSelected) {
@@ -79,7 +81,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
         }.randomOrNull()
 
     /**
-     * Recupera las palabras de la API.
+     * Retrieves the API motorcycles.
      */
     fun getRemoteMotorcycles() {
         _remoteMotorcycles.value = emptyList()
@@ -91,7 +93,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     }
 
     /**
-     * Recupera las palabras favoritas ordenadas de la BD local.
+     * Retrieves sorted deleted motorcycles from the local DB.
      */
     private fun getDeletedMotorcycles() {
         viewModelScope.launch {
@@ -105,7 +107,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     }
 
     /**
-     * Combina las palabras de la API con las favoritas y las ordena.
+     * Combines API motorcycles with deleted motorcycles and sorts them.
      */
     private fun getAllMotorcycles() {
         viewModelScope.launch {
@@ -131,9 +133,10 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     }
 
     /**
-     * Ordena las palabras de la lista combinada.
-     * @param motorcycles Lista de palabras.
-     * @return Lista de palabras ordenadas.
+     * Sort the motorcycles in the combined list.
+     *
+     * @param motorcycles List of motorcycles.
+     * @return List of sorted motorcycles.
      */
     private fun sortByMotorcyclesFilter(motorcycles: List<Motorcycle>): List<Motorcycle> {
         return when (motorcyclesFilter) {
@@ -152,6 +155,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
  * Clase MainViewModelFactory.kt
  * Creates an instance of MainViewModel.
  *
+ * @param repository It allows retrieving all motorcycles and their properties.
  */
 @Suppress("UNCHECKED_CAST")
 class MainViewModelFactory(private val repository: MotorcyclesRepository)

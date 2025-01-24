@@ -14,8 +14,8 @@ import edu.pract5.apirestfree.models.Motorcycle
  * Adapter for the RecyclerView of motorcycles.
  * @author Víctor Lamas
  *
- * @param onClickDetail Función que se ejecuta al hacer click en una palabra.
- * @param onClickRestoreOrDelete Función que se ejecuta al hacer click en el icono de favorito.
+ * @param onClickDetail Function that is executed when you click on a motorcycle item.
+ * @param onClickRestoreOrDelete Function that is executed by clicking on the delete icon.
  */
 class MotorcyclesAdapter(
     private val onClickDetail: (Motorcycle) -> Unit,
@@ -68,15 +68,8 @@ class MotorcyclesAdapter(
             bind.tvMake.text = motorcycle.make
             bind.tvModel.text = motorcycle.model
 
-            bind.icDelete.visibility = if (motorcycle.deleted) View.GONE else View.VISIBLE
-            bind.icRestore.visibility = if (motorcycle.deleted) View.VISIBLE else View.GONE
-
             bind.root.setOnClickListener {
                 onClickDetail(motorcycle)
-            }
-            bind.icRestore.setOnClickListener {
-                onClickRestoreOrDelete(motorcycle)
-                notifyItemChanged(adapterPosition)
             }
             bind.icDelete.setOnClickListener {
                 onClickRestoreOrDelete(motorcycle)
@@ -98,10 +91,10 @@ class MotorcyclesDiffCallback : DiffUtil.ItemCallback<Motorcycle>() {
      *
      * @param oldItem Old motorcycle.
      * @param newItem New motorcycle.
-     * @return True if the words is the same.
+     * @return True if the motorcycles is the same.
      */
     override fun areItemsTheSame(oldItem: Motorcycle, newItem: Motorcycle): Boolean {
-        return oldItem.make == newItem.make && oldItem.model == newItem.model
+        return oldItem.id == newItem.id
     }
 
     /**
@@ -109,7 +102,7 @@ class MotorcyclesDiffCallback : DiffUtil.ItemCallback<Motorcycle>() {
      *
      * @param oldItem Old motorcycle.
      * @param newItem New motorcycle.
-     * @return True if the content of the words is the same.
+     * @return True if the content of the motorcycles are the same.
      */
     override fun areContentsTheSame(oldItem: Motorcycle, newItem: Motorcycle): Boolean {
         return oldItem == newItem

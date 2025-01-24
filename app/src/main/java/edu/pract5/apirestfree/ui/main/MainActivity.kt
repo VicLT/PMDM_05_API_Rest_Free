@@ -81,6 +81,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initializes the top menu and bottom navigation.
+     * Updates the API motorcycles if there is a connection.
+     */
     override fun onStart() {
         super.onStart()
 
@@ -176,9 +180,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Guarda la posición actual del RecyclerView.
+     * Saves the current position of the RecyclerView.
      *
-     * @return Posición actual del RecyclerView.
+     * @return Current position of the RecyclerView.
      */
     private fun saveScrollPosition(): Int {
         val layoutManager = binding.recyclerView.layoutManager as? LinearLayoutManager
@@ -186,9 +190,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Restaura la posición guardada en el RecyclerView.
+     * Restores the saved position in the RecyclerView.
      *
-     * @param scrollPosition Posición guardada.
+     * @param scrollPosition Saved position.
      */
     private fun restoreScrollPosition(scrollPosition: Int) {
         binding.recyclerView.post {
@@ -198,9 +202,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Muestra una motocicleta (aleatoria) en un MaterialAlertDialog.
+     * Displays a (random) motorcycle in a MaterialAlertDialog.
      *
-     * @param motorcycle Motocicleta de la lista mostrada.
+     * @param motorcycle Motorcycle from the shown list.
      */
     private fun showRandomMotorcycle(motorcycle: Motorcycle?) {
         if (motorcycle != null) {
