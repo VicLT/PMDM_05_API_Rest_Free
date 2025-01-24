@@ -1,18 +1,18 @@
 package edu.pract5.apirestfree.ui.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import edu.pract5.apirestfree.domain.DeleteLocalMotorcycleUC
-import edu.pract5.apirestfree.domain.GetLocalMotorcyclesUC
-import edu.pract5.apirestfree.domain.GetRemoteMotorcyclesUC
-import edu.pract5.apirestfree.domain.SaveLocalMotorcycleUC
+import edu.pract5.apirestfree.data.MotorcyclesRepository
 import edu.pract5.apirestfree.models.Motorcycle
 import edu.pract5.apirestfree.utils.MotorcyclesFilter
 import edu.pract5.apirestfree.utils.motorcyclesFilter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 /**
@@ -20,101 +20,124 @@ import kotlinx.coroutines.launch
  * Manages operations and data status in the MainActivity UI.
  * @author Víctor Lamas
  *
- * @param getRemoteMotorcyclesUC Use case to get the motorcycles from the API.
- * @param getLocalMotorcyclesUC Use case to get the sorted favourite motorcycles from the local DB.
- * @param saveLocalMotorcycleUC Use case to update the favourite motorcycle in the local DB.
+ * @param repository It allows retrieving all motorcycles and their properties.
  */
 class MainViewModel (
-    private val getRemoteMotorcyclesUC: GetRemoteMotorcyclesUC,
-    private val getLocalMotorcyclesUC: GetLocalMotorcyclesUC,
-    private val saveLocalMotorcycleUC: SaveLocalMotorcycleUC,
-    private val deleteLocalMotorcycleUC: DeleteLocalMotorcycleUC
+    private val repository: MotorcyclesRepository
 ) : ViewModel() {
-    private var _localMotorcycles: MutableStateFlow<List<Motorcycle>> = MutableStateFlow(emptyList())
-    val localMotorcycles: StateFlow<List<Motorcycle>>
-        get() = _localMotorcycles.asStateFlow()
+    var isDeletedMotorcycleSelected: Boolean = false
+        set(value) {
+            field = value
+            _motorcycles.value = sortByMotorcyclesFilter(
+                _deletedMotorcycles.value.takeIf { field } ?: _remoteMotorcycles.value
+            )
+        }
 
-    //private var _remoteMotorcycles: List<Motorcycle> = emptyList()
+    private var _motorcycles: MutableStateFlow<List<Motorcycle>> = MutableStateFlow(emptyList())
+    val motorcycles: StateFlow<List<Motorcycle>>
+        get() = _motorcycles.asStateFlow()
+
+    private var _remoteMotorcycles: MutableStateFlow<List<Motorcycle>> = MutableStateFlow(emptyList())
+    private var _deletedMotorcycles: MutableStateFlow<List<Motorcycle>> = MutableStateFlow(emptyList())
 
     init {
-        importRemoteMotorcyclesToLocalDb()
-        importLocalMotorcycles()
+        getDeletedMotorcycles()
+        getRemoteMotorcycles()
+        getAllMotorcycles()
     }
 
-    private fun importRemoteMotorcyclesToLocalDb() {
-        //_remoteMotorcycles = emptyList()
+    /**
+     * Actualiza el filtro y ordena la lista de palabras combinadas.
+     */
+    fun sortMotorcycles() {
+        motorcyclesFilter =
+            if (motorcyclesFilter == MotorcyclesFilter.ALPHA_ASC) {
+                MotorcyclesFilter.ALPHA_DESC
+            } else {
+                MotorcyclesFilter.ALPHA_ASC
+            }
+        _motorcycles.value = sortByMotorcyclesFilter(_motorcycles.value)
+    }
 
+    /**
+     * Insertar o borrar una palabra favorita en la BD local.
+     * @param motorcycle Id, nombre, descripción y estado favorita.
+     */
+    fun updateMotorcycle(motorcycle: Motorcycle) {
         viewModelScope.launch {
-            /*getRemoteMotorcyclesUC.invoke().let {
-                _remoteMotorcycles = it
-            }*/
+            repository.updateLocalMotorcycle(motorcycle)
+        }
+    }
 
-            getRemoteMotorcyclesUC.invoke().forEach { motorcycle ->
-                saveLocalMotorcycle(motorcycle)
+    /**
+     * Busca en la lista una palabra aleatoria.
+     * @return Palabra con nombre y descripción o null.
+     */
+    fun getRandomMotorcycle(): Motorcycle? =
+        if (isDeletedMotorcycleSelected) {
+            _motorcycles.value.filter { motorcycle -> motorcycle.deleted }
+        } else {
+            _motorcycles.value
+        }.randomOrNull()
+
+    /**
+     * Recupera las palabras de la API.
+     */
+    fun getRemoteMotorcycles() {
+        _remoteMotorcycles.value = emptyList()
+        viewModelScope.launch {
+            repository.getRemoteMotorcycles().collect {
+                _remoteMotorcycles.value = it
             }
         }
     }
 
-    private fun importLocalMotorcycles() {
-        _localMotorcycles.value = emptyList()
-
+    /**
+     * Recupera las palabras favoritas ordenadas de la BD local.
+     */
+    private fun getDeletedMotorcycles() {
         viewModelScope.launch {
-            getLocalMotorcyclesUC.invoke().collect {
-                _localMotorcycles.value = it
+            repository.getLocalMotorcyclesSortedByModel(filter = motorcyclesFilter).collect {
+                _deletedMotorcycles.value = it.map { motorcycle ->
+                    motorcycle.deleted = true
+                    motorcycle
+                }
             }
         }
     }
 
-    fun resetMotorcycles() {
-        deleteAllLocalMotorcycles()
-        importRemoteMotorcyclesToLocalDb()
-        importLocalMotorcycles()
-    }
-
-    private fun deleteAllLocalMotorcycles() {
+    /**
+     * Combina las palabras de la API con las favoritas y las ordena.
+     */
+    private fun getAllMotorcycles() {
         viewModelScope.launch {
-            deleteLocalMotorcycleUC.invoke()
-        }
-    }
-
-    fun saveLocalMotorcycle(motorcycle: Motorcycle) {
-        viewModelScope.launch {
-            saveLocalMotorcycleUC.invoke(motorcycle)
-        }
-    }
-
-    fun deleteLocalMotorcycle(motorcycle: Motorcycle) {
-        viewModelScope.launch {
-            deleteLocalMotorcycleUC.invoke(motorcycle)
-        }
-    }
-
-    /*private fun getAllMotorcycles() {
-        viewModelScope.launch {
-            combine(_apiMotorcycles, _favMotorcycles) { apiMotorcycles, favMotorcycles ->
-                apiMotorcycles.map { apiMotorcycle ->
-                    apiMotorcycle.apply {
-                        favourite = favMotorcycles.any { favMotorcycle ->
-                            favMotorcycle.make == apiMotorcycle.make
-                            && favMotorcycle.model == apiMotorcycle.model
-                        }
+            combine(_remoteMotorcycles, _deletedMotorcycles) { remoteMotorcycles, deletedMotorcycles ->
+                remoteMotorcycles.map { remoteMotorcycle ->
+                    remoteMotorcycle.apply {
+                        deleted = deletedMotorcycles.any { deleteMotorcycle ->
+                            deleteMotorcycle.id == remoteMotorcycle.id }
                     }
                 }
             }.catch { exception ->
                 Log.e("MainViewModel", exception.message.toString())
             }.collect { motorcycles ->
-                _motorcycles.value = if (isFavouriteMotorcyclesSelected) {
-                    sortByModel(motorcycles.filter { motorcycle
-                        -> motorcycle.favourite
+                _motorcycles.value = if (isDeletedMotorcycleSelected) {
+                    sortByMotorcyclesFilter(motorcycles.filter { motorcycle
+                        -> motorcycle.deleted
                     })
                 } else {
-                    sortByModel(motorcycles)
+                    sortByMotorcyclesFilter(motorcycles)
                 }
             }
         }
-    }*/
+    }
 
-    private fun sortByModel(motorcycles: List<Motorcycle>): List<Motorcycle> {
+    /**
+     * Ordena las palabras de la lista combinada.
+     * @param motorcycles Lista de palabras.
+     * @return Lista de palabras ordenadas.
+     */
+    private fun sortByMotorcyclesFilter(motorcycles: List<Motorcycle>): List<Motorcycle> {
         return when (motorcyclesFilter) {
             MotorcyclesFilter.ALPHA_ASC -> motorcycles.sortedBy { motorcycle ->
                 motorcycle.model.uppercase()
@@ -133,18 +156,9 @@ class MainViewModel (
  *
  */
 @Suppress("UNCHECKED_CAST")
-class MainViewModelFactory(
-    private val getMotorcyclesUC: GetRemoteMotorcyclesUC,
-    private val getLocalMotorcyclesSortedByModelUC: GetLocalMotorcyclesUC,
-    private val updateLocalMotorcycleUC: SaveLocalMotorcycleUC,
-    private val deleteLocalMotorcycleUC: DeleteLocalMotorcycleUC
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MainViewModel(
-            getMotorcyclesUC,
-            getLocalMotorcyclesSortedByModelUC,
-            updateLocalMotorcycleUC,
-            deleteLocalMotorcycleUC
-        ) as T
+class MainViewModelFactory(private val repository: MotorcyclesRepository)
+    : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return MainViewModel(repository) as T
     }
 }

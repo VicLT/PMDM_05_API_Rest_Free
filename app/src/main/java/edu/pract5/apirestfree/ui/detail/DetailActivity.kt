@@ -9,7 +9,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import edu.pract5.apirestfree.R
@@ -20,7 +19,6 @@ import java.util.Locale
 @Suppress("DEPRECATION")
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private val TAG = DetailActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -85,23 +83,6 @@ class DetailActivity : AppCompatActivity() {
         binding.tvFrontTireData.text = if (motorcycle.frontTire.isNullOrEmpty()) "-" else motorcycle.frontTire
         binding.tvRearTireData.text = if (motorcycle.rearTire.isNullOrEmpty()) "-" else motorcycle.rearTire
         binding.tvTotalWeightData.text = if (motorcycle.totalWeight.isNullOrEmpty()) "-" else motorcycle.totalWeight
-        /*binding.ivFav.setImageState(
-            intArrayOf(R.attr.state_on),
-            motorcycle.favourite
-        )*/
-        /*binding.ivFav.setImageResource(
-            if (motorcycle.favourite) R.drawable.favourite_on else R.drawable.favourite_off
-        )*/
-        binding.ivFav.setImageDrawable(
-            ContextCompat.getDrawable(
-                this,
-                R.drawable.favourite
-            )
-        )
-        binding.ivFav.setImageState(
-            intArrayOf(R.attr.state_on),
-            motorcycle.favourite
-        )
 
         // Configura la Toolbar y habilita el botón de "volver"
         setSupportActionBar(binding.mToolbarDetail)

@@ -29,44 +29,38 @@ abstract class MotorcyclesDB : RoomDatabase() {
 @Dao
 interface MotorcyclesDao {
     /**
-     * Insert a favourite motorcycle in the local DB.
+     * Insert a motorcycle in the local DB.
      * In case of conflict, it replaces the motorcycle.
      *
-     * @param motorcycle Motorcycle marked as favourite.
+     * @param motorcycle Motorcycle that wants to be deleted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveLocalMotorcycle(motorcycle: Motorcycle)
 
-    @Query("SELECT * FROM Motorcycle")
-    fun getLocalMotorcycles(): Flow<List<Motorcycle>>
-
-    /*@Query("SELECT * FROM Motorcycle WHERE model = :model ORDER BY model ASC")
-    fun getLocalMotorcyclesByModel(model: String): Flow<List<Motorcycle>>*/
+    //@Query("SELECT * FROM Motorcycle WHERE model = :model")
+    //fun getLocalMotorcyclesByModel(model: String): Flow<List<Motorcycle>>
 
     /**
-     * Gets all motorcycles from local DB sorted by ascendant make.
+     * Gets all deleted motorcycles from local DB sorted by ascendant make.
      *
-     * @return Ascendant sorted list of motorcycles.
+     * @return Ascendant sorted list of deleted motorcycles.
      */
     @Query("SELECT * FROM Motorcycle ORDER BY model ASC")
     fun getLocalMotorcyclesSortedByModelAsc(): Flow<List<Motorcycle>>
 
     /**
-     * Gets all motorcycles from local DB sorted by descendant make.
+     * Gets all deleted motorcycles from local DB sorted by descendant make.
      *
-     * @return Descendant sorted list of motorcycles.
+     * @return Descendant sorted list of deleted motorcycles.
      */
     @Query("SELECT * FROM Motorcycle ORDER BY model DESC")
     fun getLocalMotorcyclesSortedByModelDesc(): Flow<List<Motorcycle>>
 
     /**
-     * Delete a motorcycle from the local DB.
+     * Deletes a motorcycle from the local DB.
      *
      * @param motorcycle The motorcycle to delete.
      */
     @Delete
     suspend fun deleteLocalMotorcycle(motorcycle: Motorcycle)
-
-    @Query("DELETE FROM Motorcycle")
-    suspend fun deleteAllLocalMotorcycles()
 }

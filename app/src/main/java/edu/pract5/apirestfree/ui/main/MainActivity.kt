@@ -2,12 +2,13 @@ package edu.pract5.apirestfree.ui.main
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import edu.pract5.apirestfree.R
@@ -16,10 +17,6 @@ import edu.pract5.apirestfree.data.LocalDataSource
 import edu.pract5.apirestfree.data.MotorcyclesRepository
 import edu.pract5.apirestfree.data.RemoteDataSource
 import edu.pract5.apirestfree.databinding.ActivityMainBinding
-import edu.pract5.apirestfree.domain.DeleteLocalMotorcycleUC
-import edu.pract5.apirestfree.domain.GetLocalMotorcyclesUC
-import edu.pract5.apirestfree.domain.GetRemoteMotorcyclesUC
-import edu.pract5.apirestfree.domain.SaveLocalMotorcycleUC
 import edu.pract5.apirestfree.models.Motorcycle
 import edu.pract5.apirestfree.ui.detail.DetailActivity
 import edu.pract5.apirestfree.utils.checkConnection
@@ -34,61 +31,23 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var currentScrollPosition = 0
-    private var currentFavScrollPosition = 0
+    private var currentDeletedScrollPosition = 0
 
     private val vm: MainViewModel by viewModels {
         val db = (application as RoomApplication).motorcyclesDB
         val localDataSource = LocalDataSource(db.motorcyclesDao())
         val remoteDataSource = RemoteDataSource()
-        val getRemoteMotorcyclesUC = GetRemoteMotorcyclesUC(
-            MotorcyclesRepository(
-                remoteDataSource,
-                localDataSource
-            )
-        )
-        val getLocalMotorcyclesSortedByModelUC = GetLocalMotorcyclesUC(
-            MotorcyclesRepository(
-                remoteDataSource,
-                localDataSource
-            )
-        )
-        val updateLocalMotorcycleUC = SaveLocalMotorcycleUC(
-            MotorcyclesRepository(
-                remoteDataSource,
-                localDataSource
-            )
-        )
-        val deleteLocalMotorcycleUC = DeleteLocalMotorcycleUC(
-            MotorcyclesRepository(
-                remoteDataSource,
-                localDataSource
-            )
-        )
-        MainViewModelFactory(
-            getRemoteMotorcyclesUC,
-            getLocalMotorcyclesSortedByModelUC,
-            updateLocalMotorcycleUC,
-            deleteLocalMotorcycleUC
-        )
+        val repository = MotorcyclesRepository(remoteDataSource, localDataSource)
+        MainViewModelFactory(repository)
     }
 
     private val adapter = MotorcyclesAdapter(
-        onClick = { motorcycle ->
-            motorcycle.viewed = true
+        onClickDetail = { motorcycle ->
             DetailActivity.navigateToDetail(this@MainActivity, motorcycle)
-            vm.saveLocalMotorcycle(motorcycle)
         },
-        onClickFav = { motorcycle ->
-            motorcycle.favourite = !motorcycle.favourite
-            vm.saveLocalMotorcycle(motorcycle)
-        },
-        onLongClick = { motorcycle ->
-            Toast.makeText(
-                this@MainActivity,
-                getString(R.string.txt_deleted_motorcycle, motorcycle.model),
-                Toast.LENGTH_SHORT
-            ).show()
-            vm.deleteLocalMotorcycle(motorcycle)
+        onClickRestoreOrDelete = { motorcycle ->
+            motorcycle.deleted = !motorcycle.deleted
+            vm.updateMotorcycle(motorcycle)
         }
     )
 
@@ -99,7 +58,6 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -117,7 +75,9 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
 
         lifecycleScope.launch {
-            drawAllMotorcycles()
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                drawAllMotorcycles()
+            }
         }
     }
 
@@ -126,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.swipeRefresh.setOnRefreshListener {
             if (checkConnection(this)) {
-                vm.resetMotorcycles()
+                vm.getRemoteMotorcycles()
             } else {
                 binding.swipeRefresh.isRefreshing = false
                 Toast.makeText(
@@ -147,37 +107,37 @@ class MainActivity : AppCompatActivity() {
                         .show()
                     true
                 }
-                R.id.opt_menu_random_model -> {
-                    //showRandomMotorcycle(vm.getRandomMotorcycle())
+                R.id.opt_menu_sort_by_model -> {
+                    vm.sortMotorcycles()
+                    currentScrollPosition = 0
+                    currentDeletedScrollPosition = 0
                     true
                 }
-                R.id.opt_menu_sort_by_model -> {
-                    //vm.sortMotorcyclesByModel()
-                    currentScrollPosition = 0
-                    currentFavScrollPosition = 0
+                R.id.opt_menu_random_model -> {
+                    showRandomMotorcycle(vm.getRandomMotorcycle())
                     true
                 }
                 else -> false
             }
         }
 
-        /*binding.bottomNavigationView.setOnItemSelectedListener { item ->
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.opt_all_motorcycles -> {
-                    currentFavScrollPosition = saveScrollPosition()
-                    vm.isFavouriteMotorcyclesSelected = false
+                    currentDeletedScrollPosition = saveScrollPosition()
+                    vm.isDeletedMotorcycleSelected = false
                     binding.swipeRefresh.isEnabled = true
                     true
                 }
                 R.id.opt_delete_motorcycles -> {
                     currentScrollPosition = saveScrollPosition()
-                    vm.isFavouriteMotorcyclesSelected = true
+                    vm.isDeletedMotorcycleSelected = true
                     binding.swipeRefresh.isEnabled = false
                     true
                 }
                 else -> false
             }
-        }*/
+        }
     }
 
     /**
@@ -192,12 +152,12 @@ class MainActivity : AppCompatActivity() {
         if (checkConnection(this)) {
             binding.swipeRefresh.isRefreshing = true
 
-            vm.localMotorcycles.collect { motorcycle ->
-                adapter.submitList(motorcycle) {
+            vm.motorcycles.collect { motorcycles ->
+                adapter.submitList(motorcycles) {
                     if (returnToTop) {
                         binding.recyclerView.scrollToPosition(0)
-                    /*} else if (vm.isFavouriteMotorcyclesSelected) {
-                        restoreScrollPosition(currentFavScrollPosition)*/
+                    } else if (vm.isDeletedMotorcycleSelected) {
+                        restoreScrollPosition(currentDeletedScrollPosition)
                     } else {
                         restoreScrollPosition(currentScrollPosition)
                     }
@@ -251,8 +211,8 @@ class MainActivity : AppCompatActivity() {
                 .show()
         } else {
             MaterialAlertDialogBuilder(this)
-                .setTitle(getString(R.string.warning_title))
-                .setMessage(getString(R.string.warning_message))
+                .setTitle(getString(R.string.txt_warning_title))
+                .setMessage(getString(R.string.txt_warning_message))
                 .setPositiveButton(getString(R.string.btn_alert_dialog), null)
                 .show()
         }

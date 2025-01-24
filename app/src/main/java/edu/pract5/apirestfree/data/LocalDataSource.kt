@@ -13,16 +13,12 @@ import kotlinx.coroutines.flow.Flow
  */
 class LocalDataSource(private val db: MotorcyclesDao) {
     /**
-     * Insert a favourite motorcycle in the local DB.
+     * Insert a deleted motorcycle in the local DB.
      *
-     * @param motorcycle Motorcycle marked as favourite.
+     * @param motorcycle Motorcycle that wants to be deleted.
      */
     suspend fun saveLocalMotorcycle(motorcycle: Motorcycle) {
         db.saveLocalMotorcycle(motorcycle)
-    }
-
-    fun getLocalMotorcycles(): Flow<List<Motorcycle>> {
-        return db.getLocalMotorcycles()
     }
 
     /*fun getLocalMotorcyclesByModel(model: String): Flow<List<Motorcycle>> {
@@ -30,32 +26,28 @@ class LocalDataSource(private val db: MotorcyclesDao) {
     }*/
 
     /**
-     * Get the list of favourite motorcycles from the local DB by ascending sort.
+     * Get the list of deleted motorcycles from the local DB by ascending sort.
      *
-     * @return Cold flow of ascendant sorted list of favourite motorcycles.
+     * @return Cold flow of ascendant sorted list of deleted motorcycles.
      */
     fun getLocalMotorcyclesSortedByModelAsc(): Flow<List<Motorcycle>> {
         return db.getLocalMotorcyclesSortedByModelAsc()
     }
 
     /**
-     * Get the list of favourite motorcycles from the local DB by descendant sort.
+     * Get the list of deleted motorcycles from the local DB by descendant sort.
      *
-     * @return Cold flow of descendant sorted list of favourite motorcycles.
+     * @return Cold flow of descendant sorted list of deleted motorcycles.
      */
     fun getLocalMotorcyclesSortedByModelDesc(): Flow<List<Motorcycle>> {
         return db.getLocalMotorcyclesSortedByModelDesc()
     }
 
     /**
-     * Deletes a favourite motorcycle from the local DB.
-     * @param motorcycle Motorcycle marked as favourite.
+     * Deletes a deleted motorcycle from the local DB.
+     * @param motorcycle Deleted motorcycle.
      */
     suspend fun deleteLocalMotorcycle(motorcycle: Motorcycle) {
         db.deleteLocalMotorcycle(motorcycle)
-    }
-
-    suspend fun deleteAllLocalMotorcycles() {
-        db.deleteAllLocalMotorcycles()
     }
 }

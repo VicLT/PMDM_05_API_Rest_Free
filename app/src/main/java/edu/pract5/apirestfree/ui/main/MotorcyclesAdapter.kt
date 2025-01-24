@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import edu.pract5.apirestfree.R
 import edu.pract5.apirestfree.databinding.MotorcycleItemBinding
 import edu.pract5.apirestfree.models.Motorcycle
 
@@ -15,13 +14,12 @@ import edu.pract5.apirestfree.models.Motorcycle
  * Adapter for the RecyclerView of motorcycles.
  * @author Víctor Lamas
  *
- * @param onClick Función que se ejecuta al hacer click en una palabra.
- * @param onClickFav Función que se ejecuta al hacer click en el icono de favorito.
+ * @param onClickDetail Función que se ejecuta al hacer click en una palabra.
+ * @param onClickRestoreOrDelete Función que se ejecuta al hacer click en el icono de favorito.
  */
 class MotorcyclesAdapter(
-    private val onClick: (Motorcycle) -> Unit,
-    private val onClickFav: (Motorcycle) -> Unit,
-    private val onLongClick: (Motorcycle) -> Unit
+    private val onClickDetail: (Motorcycle) -> Unit,
+    private val onClickRestoreOrDelete: (Motorcycle) -> Unit,
 ) : ListAdapter<Motorcycle, MotorcyclesAdapter.MotorcyclesViewHolder>(
     MotorcyclesDiffCallback()
 ) {
@@ -69,24 +67,18 @@ class MotorcyclesAdapter(
             bind.tvYear.text = motorcycle.year.toString()
             bind.tvMake.text = motorcycle.make
             bind.tvModel.text = motorcycle.model
-            bind.ivViewed.visibility = if (motorcycle.viewed) View.VISIBLE else View.GONE
+
+            bind.icRestore.visibility = if (motorcycle.deleted) View.GONE else View.VISIBLE
+            bind.icDelete.visibility = if (motorcycle.deleted) View.VISIBLE else View.GONE
+
             bind.root.setOnClickListener {
-                onClick(motorcycle)
+                onClickDetail(motorcycle)
                 notifyItemChanged(adapterPosition)
             }
-            bind.root.setOnLongClickListener {
-                onLongClick(motorcycle)
-                notifyItemChanged(adapterPosition)
-                true
-            }
-            bind.ivFav.setOnClickListener {
-                onClickFav(motorcycle)
+            bind.icRestore.setOnClickListener {
+                onClickRestoreOrDelete(motorcycle)
                 notifyItemChanged(adapterPosition)
             }
-            bind.ivFav.setImageState(
-                intArrayOf(R.attr.state_on),
-                motorcycle.favourite
-            )
         }
     }
 }

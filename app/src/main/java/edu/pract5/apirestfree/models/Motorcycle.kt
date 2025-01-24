@@ -2,6 +2,7 @@ package edu.pract5.apirestfree.models
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
@@ -9,15 +10,11 @@ import kotlinx.parcelize.Parcelize
 /**
  * DataClass Motorcycle.kt
  * Represents the properties of a motorcycle.
- * Only important params to show in documentation.
- * @author Víctor Lamas
  *
- * @param make The make of the motorcycle.
- * @param model The model of the motorcycle.
- * @param favourite If the motorcycle is favourite.
+ * @author Víctor Lamas
  */
 @Parcelize
-@Entity//(primaryKeys = ["make", "model"])
+@Entity
 data class Motorcycle(
     @SerializedName("id")
     @PrimaryKey(autoGenerate = true)
@@ -45,8 +42,6 @@ data class Motorcycle(
     @SerializedName("year")
     var year: String? = null,
 
-    @SerializedName("viewed")
-    var viewed: Boolean = false,
-    @SerializedName("favourite")
-    var favourite: Boolean = false
+    @Ignore
+    var deleted: Boolean = false
 ) : Parcelable
