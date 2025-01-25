@@ -3,7 +3,6 @@ package edu.pract5.apirestfree.models
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Ignore
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -14,11 +13,8 @@ import kotlinx.parcelize.Parcelize
  * @author Víctor Lamas
  */
 @Parcelize
-@Entity
+@Entity(primaryKeys = ["model"])
 data class Motorcycle(
-    @SerializedName("id")
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
     @SerializedName("displacement")
     var displacement: String? = null,
     @SerializedName("front_tire")

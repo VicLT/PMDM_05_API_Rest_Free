@@ -73,7 +73,7 @@ class MotorcyclesAdapter(
             }
             bind.icDelete.setOnClickListener {
                 onClickDelete(motorcycle)
-                notifyItemChanged(adapterPosition)
+                notifyItemRemoved(adapterPosition)
             }
         }
     }
@@ -94,7 +94,7 @@ class MotorcyclesDiffCallback : DiffUtil.ItemCallback<Motorcycle>() {
      * @return True if the motorcycles is the same.
      */
     override fun areItemsTheSame(oldItem: Motorcycle, newItem: Motorcycle): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.model == newItem.model
     }
 
     /**

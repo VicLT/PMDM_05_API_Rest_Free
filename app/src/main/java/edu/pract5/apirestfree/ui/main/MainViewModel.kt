@@ -39,12 +39,12 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     private var _deletedMotorcycles: MutableStateFlow<List<Motorcycle>> = MutableStateFlow(emptyList())
 
     init {
-        getDeletedMotorcycles()
+        getLocalMotorcycles()
         getRemoteMotorcycles()
         getAllMotorcycles()
     }
 
-    fun deleteMotorcycle(motorcycle: Motorcycle) {
+    /*fun deleteRemoteMotorcycle(motorcycle: Motorcycle) {
         if (motorcycle.deleted) {
             viewModelScope.launch {
                 _remoteMotorcycles.value = _remoteMotorcycles.value.filter {
@@ -54,13 +54,13 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
         }
     }
 
-    fun addMotorcycle(motorcycle: Motorcycle) {
+    fun addRemoteMotorcycle(motorcycle: Motorcycle) {
         if (!motorcycle.deleted) {
             viewModelScope.launch {
                 _remoteMotorcycles.value += motorcycle
             }
         }
-    }
+    }*/
 
     /**
      * Updates the filter and sorts the list of combined motorcycles.
@@ -80,7 +80,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
      *
      * @param motorcycle Object wit their properties.
      */
-    fun updateMotorcycle(motorcycle: Motorcycle) {
+    fun updateLocalMotorcycle(motorcycle: Motorcycle) {
         viewModelScope.launch {
             repository.updateLocalMotorcycle(motorcycle)
         }
@@ -104,8 +104,15 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     fun getRemoteMotorcycles() {
         _remoteMotorcycles.value = emptyList()
         viewModelScope.launch {
-            repository.getRemoteMotorcycles().collect {
+            /*repository.getRemoteMotorcycles().collect {
                 _remoteMotorcycles.value = it
+            }*/
+            repository.getRemoteMotorcycles().collect { remoteMotorcycles ->
+                _remoteMotorcycles.value = remoteMotorcycles.filter { remoteMotorcycle ->
+                    _deletedMotorcycles.value.none { deletedMotorcycle ->
+                        deletedMotorcycle.model == remoteMotorcycle.model
+                    }
+                }
             }
         }
     }
@@ -113,12 +120,12 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     /**
      * Retrieves sorted deleted motorcycles from the local DB.
      */
-    private fun getDeletedMotorcycles() {
+    private fun getLocalMotorcycles() {
         viewModelScope.launch {
-            repository.getLocalMotorcyclesSortedByModel(filter = motorcyclesFilter).collect {
-                _deletedMotorcycles.value = it.map { motorcycle ->
-                    motorcycle.deleted = true
-                    motorcycle
+            repository.getLocalMotorcyclesSortedByModel(filter = motorcyclesFilter).collect { localMotorcycles ->
+                _deletedMotorcycles.value = localMotorcycles.map { localMotorcycle ->
+                    localMotorcycle.deleted = true
+                    localMotorcycle
                 }
             }
         }
@@ -130,21 +137,41 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     private fun getAllMotorcycles() {
         viewModelScope.launch {
             combine(_remoteMotorcycles, _deletedMotorcycles) { remoteMotorcycles, deletedMotorcycles ->
-                remoteMotorcycles.map { remoteMotorcycle ->
+                /*remoteMotorcycles.map { remoteMotorcycle ->
                     remoteMotorcycle.apply {
                         deleted = deletedMotorcycles.any { deletedMotorcycle ->
-                            deletedMotorcycle.id == remoteMotorcycle.id }
+                            deletedMotorcycle.model == remoteMotorcycle.model
+                        }
+                    }
+                }*/
+
+                // Filtrar remoteMotorcycles para excluir motocicletas eliminadas
+                val filteredRemoteMotorcycles = remoteMotorcycles.filter { remoteMotorcycle ->
+                    deletedMotorcycles.none { deletedMotorcycle ->
+                        deletedMotorcycle.model == remoteMotorcycle.model
+                    }
+                }
+
+                // Combinar listas y marcar como eliminadas si corresponde
+                filteredRemoteMotorcycles.map { remoteMotorcycle ->
+                    remoteMotorcycle.apply {
+                        deleted = deletedMotorcycles.any { deletedMotorcycle ->
+                            deletedMotorcycle.model == remoteMotorcycle.model
+                        }
                     }
                 }
             }.catch { exception ->
                 Log.e("MainViewModel", exception.message.toString())
             }.collect { motorcycles ->
                 _motorcycles.value = if (areDeletedMotorcyclesSelected) {
-                    sortByMotorcyclesFilter(motorcycles.filter { motorcycle
-                        -> motorcycle.deleted
+                    sortByMotorcyclesFilter(motorcycles.filter { motorcycle ->
+                        motorcycle.deleted
                     })
                 } else {
                     sortByMotorcyclesFilter(motorcycles)
+                    /*sortByMotorcyclesFilter(motorcycles.filter { motorcycle ->
+                        !motorcycle.deleted
+                    })*/
                 }
             }
         }

@@ -47,13 +47,12 @@ class MainActivity : AppCompatActivity() {
         },
         onClickDelete = { motorcycle ->
             motorcycle.deleted = !motorcycle.deleted
-            vm.updateMotorcycle(motorcycle)
-            if (vm.areDeletedMotorcyclesSelected) {
-                vm.addMotorcycle(motorcycle)
+            vm.updateLocalMotorcycle(motorcycle)
+            /*if (!vm.areDeletedMotorcyclesSelected) {
+                vm.deleteRemoteMotorcycle(motorcycle)
             } else {
-                vm.deleteMotorcycle(motorcycle)
-            }
-
+                vm.addRemoteMotorcycle(motorcycle)
+            }*/
         }
     )
 
@@ -135,6 +134,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.opt_all_motorcycles -> {
                     currentDeletedScrollPosition = saveScrollPosition()
+                    vm.getRemoteMotorcycles()
                     vm.areDeletedMotorcyclesSelected = false
                     binding.swipeRefresh.isEnabled = true
                     true
