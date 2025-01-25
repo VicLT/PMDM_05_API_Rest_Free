@@ -30,8 +30,10 @@
     <string name="txt_total_weight">Total weight</string>
     <string name="txt_torque">Torque</string>
     <string name="txt_type">Type</string>
-    <string name="txt_warning_message">There is no favourite motorcycle to display.</string>
+    <string name="txt_warning_message">There is no deleted motorcycle to display.</string>
     <string name="txt_warning_title">Error</string>
     <string name="txt_year">Year</string>
     <string name="url_google_images">https://www.google.com/search?tbm=isch&amp;q=%s+%s+%s</string>
+    <string name="txt_desc_no_items">No motorcycles to show.</string>
+    <string name="txt_tv_no_items">No motorcycles to show</string>
 </resources>

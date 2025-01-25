@@ -1,6 +1,7 @@
 package edu.pract5.apirestfree.ui.main
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -48,10 +49,13 @@ class MainActivity : AppCompatActivity() {
         onClickDelete = { motorcycle ->
             motorcycle.deleted = !motorcycle.deleted
             vm.updateLocalMotorcycle(motorcycle)
-            /*if (!vm.areDeletedMotorcyclesSelected) {
-                vm.deleteRemoteMotorcycle(motorcycle)
-            } else {
-                vm.addRemoteMotorcycle(motorcycle)
+            // Si no hay internet, se eliminan manualmente.
+            /*if (!checkConnection(this)) {
+                if (!vm.areDeletedMotorcyclesSelected) {
+                    vm.deleteRemoteMotorcycle(motorcycle)
+                } else {
+                    vm.addRemoteMotorcycle(motorcycle)
+                }
             }*/
         }
     )
@@ -104,6 +108,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            showNoItemsWarning()
         }
 
         binding.mToolbar.setOnMenuItemClickListener { menuItem ->
@@ -134,7 +139,9 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.opt_all_motorcycles -> {
                     currentDeletedScrollPosition = saveScrollPosition()
-                    vm.getRemoteMotorcycles()
+                    if (checkConnection(this)) {
+                        vm.getRemoteMotorcycles()
+                    }
                     vm.areDeletedMotorcyclesSelected = false
                     binding.swipeRefresh.isEnabled = true
                     true
@@ -171,6 +178,8 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         restoreScrollPosition(currentScrollPosition)
                     }
+
+                    showNoItemsWarning()
                 }
 
                 binding.swipeRefresh.isRefreshing = false
@@ -225,6 +234,16 @@ class MainActivity : AppCompatActivity() {
                 .setMessage(getString(R.string.txt_warning_message))
                 .setPositiveButton(getString(R.string.btn_alert_dialog), null)
                 .show()
+        }
+    }
+
+    private fun showNoItemsWarning() {
+        if (adapter.itemCount == 0) {
+            binding.ivNoItems.visibility = View.VISIBLE
+            binding.tvNoItems.visibility = View.VISIBLE
+        } else {
+            binding.ivNoItems.visibility = View.GONE
+            binding.tvNoItems.visibility = View.GONE
         }
     }
 }
