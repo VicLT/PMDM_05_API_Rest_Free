@@ -73,7 +73,7 @@ class MotorcyclesAdapter(
             }
             bind.icDelete.setOnClickListener {
                 onClickDelete(motorcycle)
-                notifyItemRemoved(adapterPosition)
+                notifyItemChanged(adapterPosition)
             }
         }
     }
