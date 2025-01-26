@@ -2,6 +2,7 @@ package edu.pract5.apirestfree.ui.main
 
 import android.os.Bundle
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,7 @@ import kotlinx.coroutines.launch
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private var query: String? = null
     private var currentScrollPosition = 0
     private var currentDeletedScrollPosition = 0
 
@@ -117,6 +119,45 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onStart() {
         super.onStart()
+
+        /**
+         * Search handling in the SearchView to update the list of motorcycles
+         * according to the text entered.
+         */
+        binding.searchView.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                /**
+                 * Called when the user submits the query.
+                 *
+                 * @param query The query text that is to be submitted.
+                 * @return True if the query has been handled by the listener,
+                 * false to let the SearchView perform the default action.
+                 */
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                /**
+                 * Called when the query text is changed by the user.
+                 *
+                 * @param search The new content of the query text field.
+                 * @return False if the SearchView should perform the default
+                 * action of showing any suggestions if available. True if the
+                 * action was handled by the listener.
+                 */
+                override fun onQueryTextChange(search: String?): Boolean {
+                    query = search?.trim()
+                    if (checkConnection(this@MainActivity)) {
+                        if (query.isNullOrEmpty()) {
+                            vm.getRemoteMotorcycles(" ")
+                        } else {
+                            vm.getRemoteMotorcycles(query!!)
+                        }
+                    }
+                    return true
+                }
+            }
+        )
 
         /**
          * Refreshes the motorcycles from the API.

@@ -64,7 +64,7 @@ class MotorcyclesAdapter(
         private val bind = MotorcycleItemBinding.bind(view)
 
         fun bind(motorcycle: Motorcycle) {
-            bind.tvYear.text = motorcycle.year.toString()
+            bind.tvYear.text = motorcycle.year
             bind.tvMake.text = motorcycle.make
             bind.tvModel.text = motorcycle.model
 
@@ -94,7 +94,9 @@ class MotorcyclesDiffCallback : DiffUtil.ItemCallback<Motorcycle>() {
      * @return True if the motorcycles are the same.
      */
     override fun areItemsTheSame(oldItem: Motorcycle, newItem: Motorcycle): Boolean {
-        return oldItem.model == newItem.model
+        return oldItem.year == newItem.year
+                && oldItem.make == newItem.make
+                && oldItem.model == newItem.model
     }
 
     /**

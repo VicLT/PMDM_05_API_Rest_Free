@@ -19,10 +19,11 @@ class MotorcyclesRepository (
     /**
      * Get the complete list of API motorcycles.
      *
+     * @param model The model of the motorcycle to get.
      * @return Cold flow list of motorcycles.
      */
-    fun getRemoteMotorcycles(): Flow<List<Motorcycle>> {
-        return remoteDataSource.getRemoteMotorcycles()
+    fun getRemoteMotorcycles(model: String): Flow<List<Motorcycle>> {
+        return remoteDataSource.getRemoteMotorcycles(model)
     }
 
     /**

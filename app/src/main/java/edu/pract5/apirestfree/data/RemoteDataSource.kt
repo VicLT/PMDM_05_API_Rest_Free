@@ -15,9 +15,10 @@ class RemoteDataSource {
     /**
      * Gets a list of motorcycles from the API.
      *
+     * @param model The model of the motorcycle to get.
      * @return A flow list of motorcycles.
      */
-    fun getRemoteMotorcycles() = flow {
-        emit(api.getRemoteMotorcycles())
+    fun getRemoteMotorcycles(model: String) = flow {
+        emit(api.getRemoteMotorcycles(model))
     }
 }

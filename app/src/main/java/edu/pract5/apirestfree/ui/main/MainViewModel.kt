@@ -109,15 +109,19 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
 
     /**
      * Retrieves motorcycles from the API.
+     *
+     * @param model The model of the wanted motorcycle to get.
      */
-    fun getRemoteMotorcycles() {
+    fun getRemoteMotorcycles(model: String = " ") {
         _remoteMotorcycles.value = emptyList()
 
         viewModelScope.launch {
-            repository.getRemoteMotorcycles().collect { remoteMotorcycles ->
+            repository.getRemoteMotorcycles(model).collect { remoteMotorcycles ->
                 _remoteMotorcycles.value = remoteMotorcycles.filter { remoteMotorcycle ->
                     _localMotorcycles.value.none { localMotorcycle ->
-                        localMotorcycle.model == remoteMotorcycle.model
+                        localMotorcycle.year == remoteMotorcycle.year
+                                && localMotorcycle.make == remoteMotorcycle.make
+                                && localMotorcycle.model == remoteMotorcycle.model
                     }
                 }
             }
@@ -148,7 +152,9 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
                 // Filter out remote motorcycles that are not on the local list.
                 val filteredRemoteMotorcycles = remoteMotorcycles.filter { remoteMotorcycle ->
                     localMotorcycles.none { localMotorcycle ->
-                        localMotorcycle.model == remoteMotorcycle.model
+                        localMotorcycle.year == remoteMotorcycle.year
+                                    && localMotorcycle.make == remoteMotorcycle.make
+                                    && localMotorcycle.model == remoteMotorcycle.model
                     }
                 }
 
@@ -156,7 +162,9 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
                 val combinedMotorcycles = filteredRemoteMotorcycles.map { remoteMotorcycle ->
                     remoteMotorcycle.apply {
                         deleted = localMotorcycles.any { localMotorcycle ->
-                            localMotorcycle.model == remoteMotorcycle.model
+                            localMotorcycle.year == remoteMotorcycle.year
+                                    && localMotorcycle.make == remoteMotorcycle.make
+                                    && localMotorcycle.model == remoteMotorcycle.model
                         }
                     }
                 } + localMotorcycles // Combines local and filtered lists.

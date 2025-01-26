@@ -13,7 +13,7 @@ import kotlinx.parcelize.Parcelize
  * @author Víctor Lamas
  */
 @Parcelize
-@Entity(primaryKeys = ["model"])
+@Entity(primaryKeys = ["year", "make", "model"])
 data class Motorcycle(
     @SerializedName("displacement")
     var displacement: String? = null,
@@ -36,7 +36,7 @@ data class Motorcycle(
     @SerializedName("type")
     var type: String? = null,
     @SerializedName("year")
-    var year: String? = null,
+    var year: String = "",
     @SerializedName("total_height")
     var totalHeight: String? = null,
     @SerializedName("total_width")
