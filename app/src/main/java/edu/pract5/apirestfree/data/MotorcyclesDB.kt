@@ -37,9 +37,6 @@ interface MotorcyclesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveLocalMotorcycle(motorcycle: Motorcycle)
 
-    //@Query("SELECT * FROM Motorcycle WHERE model = :model")
-    //fun getLocalMotorcyclesByModel(model: String): Flow<List<Motorcycle>>
-
     /**
      * Gets all deleted motorcycles from local DB sorted by ascendant make.
      *

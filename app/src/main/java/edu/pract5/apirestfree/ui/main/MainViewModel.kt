@@ -105,9 +105,6 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
         _remoteMotorcycles.value = emptyList()
 
         viewModelScope.launch {
-            /*repository.getRemoteMotorcycles().collect {
-                _remoteMotorcycles.value = it
-            }*/
             repository.getRemoteMotorcycles().collect { remoteMotorcycles ->
                 _remoteMotorcycles.value = remoteMotorcycles.filter { remoteMotorcycle ->
                     _localMotorcycles.value.none { localMotorcycle ->
@@ -163,7 +160,6 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
                         motorcycle.deleted
                     })
                 } else {
-                    //sortByMotorcyclesFilter(motorcycles)
                     sortByMotorcyclesFilter(motorcycles.filter { motorcycle ->
                         !motorcycle.deleted
                     })
