@@ -23,8 +23,6 @@ abstract class MotorcyclesDB : RoomDatabase() {
 
 /**
  * DAO implementations for child classes.
- *
- * @author Víctor Lamas
  */
 @Dao
 interface MotorcyclesDao {
@@ -32,23 +30,23 @@ interface MotorcyclesDao {
      * Insert a motorcycle in the local DB.
      * In case of conflict, it replaces the motorcycle.
      *
-     * @param motorcycle Motorcycle that wants to be deleted.
+     * @param motorcycle The motorcycle to save.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveLocalMotorcycle(motorcycle: Motorcycle)
 
     /**
-     * Gets all deleted motorcycles from local DB sorted by ascendant make.
+     * Gets all motorcycles from local DB sorted by ascendant model.
      *
-     * @return Ascendant sorted list of deleted motorcycles.
+     * @return Ascendant sorted list of motorcycles.
      */
     @Query("SELECT * FROM Motorcycle ORDER BY model ASC")
     fun getLocalMotorcyclesSortedByModelAsc(): Flow<List<Motorcycle>>
 
     /**
-     * Gets all deleted motorcycles from local DB sorted by descendant make.
+     * Gets all motorcycles from local DB sorted by descendant model.
      *
-     * @return Descendant sorted list of deleted motorcycles.
+     * @return Descendant sorted list of motorcycles.
      */
     @Query("SELECT * FROM Motorcycle ORDER BY model DESC")
     fun getLocalMotorcyclesSortedByModelDesc(): Flow<List<Motorcycle>>

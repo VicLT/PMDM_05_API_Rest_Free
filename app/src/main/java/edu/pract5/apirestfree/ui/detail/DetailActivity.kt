@@ -15,10 +15,21 @@ import edu.pract5.apirestfree.databinding.ActivityDetailBinding
 import edu.pract5.apirestfree.models.Motorcycle
 import java.util.Locale
 
+/**
+ * Displays the details of a selected motorcycle.
+ * @author Víctor Lamas
+ *
+ * @property binding Reference to the binding of the activity to access the views.
+ */
 @Suppress("DEPRECATION")
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 
+    /**
+     * Displays motorcycle details if passed through an Intent.
+     *
+     * @param savedInstanceState The saved instance state.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -63,6 +74,11 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Sets up the detail view with the motorcycle data.
+     *
+     * @param motorcycle The motorcycle to display.
+     */
     private fun setupDetailView(motorcycle: Motorcycle) {
         binding.tvHeight.text = if (motorcycle.totalHeight.isNullOrEmpty()) "-" else motorcycle.totalHeight
         binding.tvWidth.text = if (motorcycle.totalWidth.isNullOrEmpty()) "-" else motorcycle.totalWidth
@@ -82,12 +98,12 @@ class DetailActivity : AppCompatActivity() {
         binding.tvRearTireData.text = if (motorcycle.rearTire.isNullOrEmpty()) "-" else motorcycle.rearTire
         binding.tvTotalWeightData.text = if (motorcycle.totalWeight.isNullOrEmpty()) "-" else motorcycle.totalWeight
 
-        // Configura la Toolbar y habilita el botón de "volver"
+        // Configure the Toolbar and enable the “back” button.
         setSupportActionBar(binding.mToolbarDetail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.txt_back)
 
-        // Abre el navegador con la búsqueda de la moto en Google Imágenes
+        // Open the web browser with the search for the motorcycle in Google Images.
         binding.tvMakeAndModel.setOnClickListener {
             Intent(
                 Intent.ACTION_VIEW,

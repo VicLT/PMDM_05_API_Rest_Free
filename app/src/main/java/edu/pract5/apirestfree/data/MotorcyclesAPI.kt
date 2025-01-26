@@ -37,14 +37,13 @@ interface MotorcyclesAPIInterface {
     /**
      * Gets a list of motorbikes from the API.
      *
-     * @param make The make of the motorcycle to get.
-     * @param model The make of the motorcycle to get.
+     * @param model The model of the motorcycle to get.
      * @return List of 30 motorcycles.
      */
     @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
     @GET("v1/motorcycles")
     suspend fun getRemoteMotorcycles(
-        //@Query("model") make: String = " ",
+        //Query("make") make: String = " ",
         @Query("model") model: String = " "
     ): List<Motorcycle>
 }

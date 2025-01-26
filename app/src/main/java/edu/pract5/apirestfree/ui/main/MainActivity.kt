@@ -26,9 +26,12 @@ import kotlinx.coroutines.launch
 
 /**
  * Class MainActivity.kt
- * Manages operations and data status in the UI.
- *
+ * Displays API or local motorcycles and allows sorting them by model or displaying a random one.
  * @author Víctor Lamas
+ *
+ * @property binding Reference to the binding of the activity to access the views.
+ * @property currentScrollPosition Current position of the RecyclerView.
+ * @property currentDeletedScrollPosition Current position of the RecyclerView with deleted motorcycles.
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -43,6 +46,11 @@ class MainActivity : AppCompatActivity() {
         MainViewModelFactory(repository)
     }
 
+    /**
+     * Adapter for displaying motorcycles in the RecyclerView.
+     * It allows to show the detail of a motorcycle or delete it.
+     * Allows you to undo the deletion of a motorcycle.
+     */
     private val adapter = MotorcyclesAdapter(
         onClickDetail = { motorcycle ->
             DetailActivity.navigateToDetail(this@MainActivity, motorcycle)
@@ -105,12 +113,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Initializes the top menu and bottom navigation.
-     * Updates the API motorcycles if there is a connection.
+     * Initializes the swipe refresh, the top menu and the bottom navigation.
      */
     override fun onStart() {
         super.onStart()
 
+        /**
+         * Refreshes the motorcycles from the API.
+         */
         binding.swipeRefresh.setOnRefreshListener {
             if (checkConnection(this)) {
                 vm.getRemoteMotorcycles()
@@ -125,6 +135,10 @@ class MainActivity : AppCompatActivity() {
             showNoItemsWarning()
         }
 
+        /**
+         * Sorts the motorcycles by model.
+         * Shows a random motorcycle.
+         */
         binding.mToolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.opt_menu_about -> {
@@ -149,6 +163,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        /**
+         * Bottom navigation to show all motorcycles or only the deleted ones.
+         */
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.opt_all_motorcycles -> {
@@ -169,7 +186,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * It gets all the motorcycles from the API, sorts them and displays them in the VR.
+     * It gets all the motorcycles from the API, sorts and displays them in the RV.
      * Restores the last displayed position.
      *
      * @param returnToTop Back to the beginning of the RecyclerView.
@@ -248,6 +265,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Shows a warning if there are no motorcycles in the list.
+     */
     private fun showNoItemsWarning() {
         if (adapter.itemCount == 0) {
             binding.ivNoItems.visibility = View.VISIBLE

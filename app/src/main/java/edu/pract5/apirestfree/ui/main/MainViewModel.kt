@@ -23,6 +23,9 @@ import kotlinx.coroutines.launch
  * @param repository It allows retrieving all motorcycles and their properties.
  */
 class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel() {
+    /**
+     * Indicates if the deleted motorcycles are selected or not in order to change de data source.
+     */
     var areDeletedMotorcyclesSelected: Boolean = false
         set(value) {
             field = value
@@ -44,6 +47,9 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
         mergeMotorcycles()
     }
 
+    /**
+     * Updates the list when a bike has been deleted.
+     */
     fun deleteRemoteMotorcycle(motorcycle: Motorcycle) {
         if (motorcycle.deleted) {
             viewModelScope.launch {
@@ -54,6 +60,9 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
         }
     }
 
+    /**
+     * Updates the list when a motorcycle has returned to the list of undeleted motorcycles.
+     */
     fun addRemoteMotorcycle(motorcycle: Motorcycle) {
         if (!motorcycle.deleted) {
             viewModelScope.launch {
@@ -76,9 +85,9 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     }
 
     /**
-     * Insert or delete a deleted motorcycle in the local DB.
+     * Inserts or deletes in the local DB a motorcycle marked as deleted.
      *
-     * @param motorcycle Object wit their properties.
+     * @param motorcycle Object with their properties.
      */
     fun updateLocalMotorcycle(motorcycle: Motorcycle) {
         viewModelScope.launch {
@@ -99,7 +108,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
         }.randomOrNull()
 
     /**
-     * Retrieves the API motorcycles.
+     * Retrieves motorcycles from the API.
      */
     fun getRemoteMotorcycles() {
         _remoteMotorcycles.value = emptyList()
@@ -116,7 +125,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     }
 
     /**
-     * Retrieves sorted deleted motorcycles from the local DB.
+     * Retrieves sorted motorcycles from the local DB.
      */
     private fun getLocalMotorcycles() {
         viewModelScope.launch {
@@ -131,30 +140,32 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
     }
 
     /**
-     * Combines API motorcycles with deleted motorcycles and sorts them.
+     * Combines API motorcycles with local motorcycles and sorts them.
      */
     private fun mergeMotorcycles() {
         viewModelScope.launch {
             combine(_remoteMotorcycles, _localMotorcycles) { remoteMotorcycles, localMotorcycles ->
+                // Filter out remote motorcycles that are not on the local list.
                 val filteredRemoteMotorcycles = remoteMotorcycles.filter { remoteMotorcycle ->
                     localMotorcycles.none { localMotorcycle ->
                         localMotorcycle.model == remoteMotorcycle.model
                     }
                 }
 
+                //  Mark as deleted the remote motorcycles that match the local ones.
                 val combinedMotorcycles = filteredRemoteMotorcycles.map { remoteMotorcycle ->
                     remoteMotorcycle.apply {
                         deleted = localMotorcycles.any { localMotorcycle ->
                             localMotorcycle.model == remoteMotorcycle.model
                         }
                     }
-                } + localMotorcycles
+                } + localMotorcycles // Combines local and filtered lists.
 
                 combinedMotorcycles
             }.catch { exception ->
                 Log.e("MainViewModel", exception.message.toString())
             }.collect { motorcycles ->
-                Log.d("moto", "collect: ${motorcycles.filter { it.deleted }}")
+                // Filter and update according to whether motorcycles are deleted or not.
                 _motorcycles.value = if (areDeletedMotorcyclesSelected) {
                     sortByMotorcyclesFilter(motorcycles.filter { motorcycle ->
                         motorcycle.deleted
