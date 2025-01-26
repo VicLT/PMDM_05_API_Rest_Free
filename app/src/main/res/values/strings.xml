@@ -9,8 +9,6 @@
     <string name="txt_deleted_motorcycle">The motorcycle %1$s has been deleted.</string>
     <string name="txt_desc_delete">Delete the motorcycle</string>
     <string name="txt_desc_motorcycle">Motorcycle image</string>
-    <string name="txt_desc_restore">Restore the deleted motorcycle</string>
-    <string name="txt_desc_viewed">Motorcycle viewed</string>
     <string name="txt_displacement">Displacement</string>
     <string name="txt_front_tire">Front tire</string>
     <string name="txt_gearbox">Gearbox</string>
@@ -19,11 +17,8 @@
     <string name="txt_no_connection">No Internet connection.</string>
     <string name="txt_no_data">No motorcycle data.</string>
     <string name="txt_opt_all_motorcycles">ALL</string>
-    <string name="txt_opt_bottom_deletes">DELETES</string>
-    <string name="txt_opt_bottom_visited">VISITED</string>
-    <string name="txt_opt_menu_sort_by_year">Sort by year (0–9)</string>
+    <string name="txt_opt_bottom_deletes">DELETED</string>
     <string name="txt_opt_random_model">Random motorcycle</string>
-    <string name="txt_opt_sort_by_make">Sort by make (A-Z)</string>
     <string name="txt_opt_sort_by_model">Sort by model (A-Z)</string>
     <string name="txt_power">Power</string>
     <string name="txt_rear_tire">Rear tire</string>

@@ -28,6 +28,11 @@ fun checkConnection(context: Context): Boolean {
     return false
 }
 
+/**
+ * Enum class for the filter of motorcycles.
+ * ALPHA_ASC: Ascending alphabetical order.
+ * ALPHA_DESC: Descending alphabetical order.
+ */
 enum class MotorcyclesFilter {
     ALPHA_ASC,
     ALPHA_DESC

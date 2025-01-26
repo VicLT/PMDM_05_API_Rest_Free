@@ -14,8 +14,8 @@ import edu.pract5.apirestfree.models.Motorcycle
  * Adapter for the RecyclerView of motorcycles.
  * @author Víctor Lamas
  *
- * @param onClickDetail Function that is executed when you click on a motorcycle item.
- * @param onClickDelete Function that is executed by clicking on the delete icon.
+ * @param onClickDetail The action to perform when a motorcycle is clicked.
+ * @param onClickDelete The action to perform when a delete icon is clicked.
  */
 class MotorcyclesAdapter(
     private val onClickDetail: (Motorcycle) -> Unit,
@@ -81,17 +81,17 @@ class MotorcyclesAdapter(
 
 /**
  * Class MotorcyclesAdapter.kt
- * Compare two words.
+ * Compare two motorcycles.
  *
  * @author Víctor Lamas
  */
 class MotorcyclesDiffCallback : DiffUtil.ItemCallback<Motorcycle>() {
     /**
-     * Checks if two motorcycles are the same by their ID.
+     * Checks if two motorcycles are the same by their model.
      *
      * @param oldItem Old motorcycle.
      * @param newItem New motorcycle.
-     * @return True if the motorcycles is the same.
+     * @return True if the motorcycles are the same.
      */
     override fun areItemsTheSame(oldItem: Motorcycle, newItem: Motorcycle): Boolean {
         return oldItem.model == newItem.model

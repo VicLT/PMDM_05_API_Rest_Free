@@ -80,8 +80,8 @@ class DetailActivity : AppCompatActivity() {
      * @param motorcycle The motorcycle to display.
      */
     private fun setupDetailView(motorcycle: Motorcycle) {
-        binding.tvHeight.text = if (motorcycle.totalHeight.isNullOrEmpty()) "-" else motorcycle.totalHeight
-        binding.tvWidth.text = if (motorcycle.totalWidth.isNullOrEmpty()) "-" else motorcycle.totalWidth
+        binding.tvHeight.text = if (motorcycle.totalHeight.isNullOrEmpty()) "No data" else motorcycle.totalHeight
+        binding.tvWidth.text = if (motorcycle.totalWidth.isNullOrEmpty()) "No data" else motorcycle.totalWidth
         binding.tvMakeAndModel.text = String.format(getString(
                 R.string.txt_make_and_model
             ),
