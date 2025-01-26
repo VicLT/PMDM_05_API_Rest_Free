@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">API REST FREE</string>
+    <string name="app_name">MOTORCYCLES API</string>
     <string name="btn_alert_dialog">OK</string>
-    <string name="default_motorcycle">Search…</string>
+    <string name="default_motorcycle">Search by model…</string>
     <string name="txt_about">About</string>
     <string name="txt_about_description">2024–25\n2ºDAM SEMI\nVÍCTOR LAMAS TURRILLO</string>
     <string name="txt_about_title">PMDM</string>
@@ -34,6 +34,10 @@
     <string name="txt_warning_title">Error</string>
     <string name="txt_year">Year</string>
     <string name="url_google_images">https://www.google.com/search?tbm=isch&amp;q=%s+%s+%s</string>
+    <string name="txt_desc_back_arrow">Back arrow</string>
+    <string name="txt_desc_downward_arrow">Downward arrow</string>
+    <string name="txt_desc_forward_arrow">Forward arrow</string>
+    <string name="txt_desc_upward_arrow">Upward arrow</string>
     <string name="txt_desc_no_items">No motorcycles to show.</string>
     <string name="txt_tv_no_items">No motorcycles to show</string>
     <string name="txt_undo">Undo</string>

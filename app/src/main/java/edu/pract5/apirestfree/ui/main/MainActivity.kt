@@ -1,10 +1,14 @@
 package edu.pract5.apirestfree.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
@@ -32,6 +36,7 @@ import kotlinx.coroutines.launch
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private var query: String? = null
     private var currentScrollPosition = 0
     private var currentDeletedScrollPosition = 0
 
@@ -148,6 +153,39 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        /*binding.searchView.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                /**
+                 * Called when the user submits the query.
+                 *
+                 * @param query The query text that is to be submitted
+                 * @return true if the query has been handled by the listener,
+                 * false to let the SearchView perform the default action.
+                 */
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                /**
+                 * Called when the query text is changed by the user.
+                 *
+                 * @param newText the new content of the query text field.
+                 * @return false if the SearchView should perform the default
+                 * action of showing any suggestions if available. True if the
+                 * action was handled by the listener.
+                 */
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    query = newText
+                    vm.updateListCities(query!!)
+
+                    lifecycleScope.launch {
+                        populateCities()
+                    }
+                    return true
+                }
+            }
+        )*/
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {

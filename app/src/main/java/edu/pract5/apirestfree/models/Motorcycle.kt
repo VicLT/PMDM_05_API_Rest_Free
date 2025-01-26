@@ -37,6 +37,10 @@ data class Motorcycle(
     var type: String? = null,
     @SerializedName("year")
     var year: String? = null,
+    @SerializedName("total_height")
+    var totalHeight: String? = null,
+    @SerializedName("total_width")
+    var totalWidth: String? = null,
 
     @Ignore
     var deleted: Boolean = false

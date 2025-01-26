@@ -64,6 +64,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupDetailView(motorcycle: Motorcycle) {
+        binding.tvHeight.text = if (motorcycle.totalHeight.isNullOrEmpty()) "-" else motorcycle.totalHeight
+        binding.tvWidth.text = if (motorcycle.totalWidth.isNullOrEmpty()) "-" else motorcycle.totalWidth
         binding.tvMakeAndModel.text = String.format(getString(
                 R.string.txt_make_and_model
             ),

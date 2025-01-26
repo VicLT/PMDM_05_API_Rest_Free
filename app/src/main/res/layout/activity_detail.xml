@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTintMode="add"
-    android:foregroundTintMode="add"
-    android:orientation="horizontal"
+    android:background="@color/white"
     tools:context=".ui.detail.DetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -33,40 +32,102 @@
 
     <ImageView
         android:id="@+id/iv_motorcycle"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="300dp"
+        android:layout_height="225dp"
+        android:padding="5dp"
         android:contentDescription="@string/txt_desc_motorcycle"
-        android:src="@drawable/ic_motorcycle"
+        android:src="@drawable/iv_motorcycle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbarDetail"
-        tools:src="@drawable/ic_motorcycle" />
+        app:layout_constraintTop_toBottomOf="@id/appbarDetail" />
+
+    <ImageView
+        android:id="@+id/iv_upward_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/txt_desc_upward_arrow"
+        android:src="@drawable/ic_arrow_upward"
+        app:layout_constraintTop_toTopOf="@id/iv_motorcycle"
+        app:layout_constraintStart_toEndOf="@id/iv_motorcycle"/>
+
+    <TextView
+        android:id="@+id/tv_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:rotation="90"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintStart_toStartOf="@id/iv_upward_arrow"
+        app:layout_constraintEnd_toEndOf="@id/iv_upward_arrow"
+        app:layout_constraintTop_toBottomOf="@id/iv_upward_arrow"
+        app:layout_constraintBottom_toTopOf="@id/iv_downward_arrow"
+        tools:text="HEIGHT (mm)" />
+
+    <ImageView
+        android:id="@+id/iv_downward_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:contentDescription="@string/txt_desc_downward_arrow"
+        android:src="@drawable/ic_arrow_downward"
+        app:layout_constraintBottom_toBottomOf="@id/iv_motorcycle"
+        app:layout_constraintStart_toEndOf="@id/iv_motorcycle"/>
+
+    <ImageView
+        android:id="@+id/iv_back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:contentDescription="@string/txt_desc_back_arrow"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="@id/iv_motorcycle"
+        app:layout_constraintTop_toBottomOf="@id/iv_motorcycle" />
+
+    <TextView
+        android:id="@+id/tv_width"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:padding="5dp"
+        app:layout_constraintStart_toEndOf="@id/iv_back_arrow"
+        app:layout_constraintEnd_toStartOf="@id/iv_forward_arrow"
+        app:layout_constraintTop_toBottomOf="@id/iv_motorcycle"
+        app:layout_constraintBottom_toBottomOf="@id/iv_back_arrow"
+        tools:text="WIDTH (mm)" />
+
+    <ImageView
+        android:id="@+id/iv_forward_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:contentDescription="@string/txt_desc_forward_arrow"
+        android:src="@drawable/ic_arrow_forward"
+        app:layout_constraintEnd_toEndOf="@id/iv_motorcycle"
+        app:layout_constraintTop_toBottomOf="@id/iv_motorcycle" />
+
+    <TextView
+        android:id="@+id/tv_make_and_model"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_margin="30dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#0000ff"
+        android:padding="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_motorcycle"
+        tools:text="MAKE AND MODEL" />
 
     <ImageView
         android:id="@+id/iv_image_search"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:backgroundTint="@color/mr_cast_progressbar_progress_and_thumb_dark"
         android:contentDescription="@string/txt_desc_motorcycle"
         android:src="@drawable/ic_image_search"
-        app:layout_constraintTop_toTopOf="@id/tv_make_and_model"
-        app:layout_constraintBottom_toBottomOf="@id/tv_make_and_model"
-        app:layout_constraintEnd_toStartOf="@id/tv_make_and_model"/>
-
-    <TextView
-        android:id="@+id/tv_make_and_model"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/alegreya_sc_medium"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#0000ff"
-        android:padding="5dp"
-        app:layout_constraintBottom_toTopOf="@id/tl_data"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_motorcycle"
-        tools:text="MAKE AND MODEL" />
+        app:layout_constraintTop_toBottomOf="@id/tv_make_and_model"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TableLayout
         android:id="@+id/tl_data"
@@ -88,7 +149,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:text="@string/txt_year"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
@@ -99,7 +159,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
@@ -116,7 +175,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:text="@string/txt_type"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="type property" />
@@ -126,7 +184,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="type data" />
@@ -143,7 +200,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:text="@string/txt_displacement"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
@@ -154,7 +210,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
@@ -171,7 +226,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:text="@string/txt_power"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="power property" />
@@ -181,7 +235,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="power data" />
@@ -198,7 +251,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:text="@string/txt_torque"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
@@ -209,7 +261,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
@@ -226,7 +277,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:text="@string/txt_gearbox"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="gearbox property" />
@@ -236,7 +286,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="gearbox data" />
@@ -253,7 +302,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:text="@string/txt_front_tire"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
@@ -264,7 +312,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
@@ -281,7 +328,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:text="@string/txt_rear_tire"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="rear tire property" />
@@ -291,7 +337,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="rear tire data" />
@@ -308,7 +353,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:text="@string/txt_total_weight"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
@@ -319,7 +363,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/alegreya_sc_medium"
                 android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
