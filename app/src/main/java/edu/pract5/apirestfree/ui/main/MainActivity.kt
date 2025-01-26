@@ -1,14 +1,10 @@
 package edu.pract5.apirestfree.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
@@ -36,7 +32,7 @@ import kotlinx.coroutines.launch
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var query: String? = null
+    //private var query: String? = null
     private var currentScrollPosition = 0
     private var currentDeletedScrollPosition = 0
 
