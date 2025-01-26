@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import edu.pract5.apirestfree.R
 import edu.pract5.apirestfree.RoomApplication
 import edu.pract5.apirestfree.data.LocalDataSource
@@ -49,11 +50,27 @@ class MainActivity : AppCompatActivity() {
         onClickDelete = { motorcycle ->
             motorcycle.deleted = !motorcycle.deleted
             vm.updateLocalMotorcycle(motorcycle)
+
             if (!vm.areDeletedMotorcyclesSelected) {
                 vm.deleteRemoteMotorcycle(motorcycle)
             } else {
                 vm.addRemoteMotorcycle(motorcycle)
             }
+
+            Snackbar.make(
+                binding.root,
+                String.format(getString(R.string.txt_deleted_motorcycle), motorcycle.model),
+                Snackbar.LENGTH_LONG
+            ).setAction(getString(R.string.txt_undo)) {
+                motorcycle.deleted = !motorcycle.deleted
+                vm.updateLocalMotorcycle(motorcycle)
+
+                if (!vm.areDeletedMotorcyclesSelected) {
+                    vm.addRemoteMotorcycle(motorcycle)
+                } else {
+                    vm.deleteRemoteMotorcycle(motorcycle)
+                }
+            }.show()
         }
     )
 
@@ -136,9 +153,6 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.opt_all_motorcycles -> {
                     currentDeletedScrollPosition = saveScrollPosition()
-                    /*if (checkConnection(this)) {
-                        vm.getRemoteMotorcycles()
-                    }*/
                     vm.areDeletedMotorcyclesSelected = false
                     binding.swipeRefresh.isEnabled = true
                     true
