@@ -49,14 +49,11 @@ class MainActivity : AppCompatActivity() {
         onClickDelete = { motorcycle ->
             motorcycle.deleted = !motorcycle.deleted
             vm.updateLocalMotorcycle(motorcycle)
-            // Si no hay internet, se eliminan manualmente.
-            /*if (!checkConnection(this)) {
-                if (!vm.areDeletedMotorcyclesSelected) {
-                    vm.deleteRemoteMotorcycle(motorcycle)
-                } else {
-                    vm.addRemoteMotorcycle(motorcycle)
-                }
-            }*/
+            if (!vm.areDeletedMotorcyclesSelected) {
+                vm.deleteRemoteMotorcycle(motorcycle)
+            } else {
+                vm.addRemoteMotorcycle(motorcycle)
+            }
         }
     )
 
@@ -139,9 +136,9 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.opt_all_motorcycles -> {
                     currentDeletedScrollPosition = saveScrollPosition()
-                    if (checkConnection(this)) {
+                    /*if (checkConnection(this)) {
                         vm.getRemoteMotorcycles()
-                    }
+                    }*/
                     vm.areDeletedMotorcyclesSelected = false
                     binding.swipeRefresh.isEnabled = true
                     true

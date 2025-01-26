@@ -44,7 +44,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
         mergeMotorcycles()
     }
 
-    /*fun deleteRemoteMotorcycle(motorcycle: Motorcycle) {
+    fun deleteRemoteMotorcycle(motorcycle: Motorcycle) {
         if (motorcycle.deleted) {
             viewModelScope.launch {
                 _remoteMotorcycles.value = _remoteMotorcycles.value.filter {
@@ -60,7 +60,7 @@ class MainViewModel (private val repository: MotorcyclesRepository) : ViewModel(
                 _remoteMotorcycles.value += motorcycle
             }
         }
-    }*/
+    }
 
     /**
      * Updates the filter and sorts the list of combined motorcycles.
