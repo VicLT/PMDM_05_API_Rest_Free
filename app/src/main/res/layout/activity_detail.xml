@@ -1,373 +1,381 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ui.detail.DetailActivity">
+    android:layout_height="wrap_content">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbarDetail"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/white"
+        tools:context=".ui.detail.DetailActivity">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/mToolbarDetail"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:layout_scrollEffect="compress"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:title="@string/app_name"
-            app:titleTextColor="@color/design_default_color_on_primary" />
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <ImageView
-        android:id="@+id/iv_motorcycle"
-        android:layout_width="300dp"
-        android:layout_height="225dp"
-        android:padding="5dp"
-        android:contentDescription="@string/txt_desc_motorcycle"
-        android:src="@drawable/iv_motorcycle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbarDetail" />
-
-    <ImageView
-        android:id="@+id/iv_upward_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/txt_desc_upward_arrow"
-        android:src="@drawable/ic_arrow_upward"
-        app:layout_constraintTop_toTopOf="@id/iv_motorcycle"
-        app:layout_constraintStart_toEndOf="@id/iv_motorcycle"/>
-
-    <TextView
-        android:id="@+id/tv_height"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:rotation="90"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintStart_toStartOf="@id/iv_upward_arrow"
-        app:layout_constraintEnd_toEndOf="@id/iv_upward_arrow"
-        app:layout_constraintTop_toBottomOf="@id/iv_upward_arrow"
-        app:layout_constraintBottom_toTopOf="@id/iv_downward_arrow"
-        tools:text="HEIGHT (mm)" />
-
-    <ImageView
-        android:id="@+id/iv_downward_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:contentDescription="@string/txt_desc_downward_arrow"
-        android:src="@drawable/ic_arrow_downward"
-        app:layout_constraintBottom_toBottomOf="@id/iv_motorcycle"
-        app:layout_constraintStart_toEndOf="@id/iv_motorcycle"/>
-
-    <ImageView
-        android:id="@+id/iv_back_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:contentDescription="@string/txt_desc_back_arrow"
-        android:src="@drawable/ic_arrow_back"
-        app:layout_constraintStart_toStartOf="@id/iv_motorcycle"
-        app:layout_constraintTop_toBottomOf="@id/iv_motorcycle" />
-
-    <TextView
-        android:id="@+id/tv_width"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:padding="5dp"
-        app:layout_constraintStart_toEndOf="@id/iv_back_arrow"
-        app:layout_constraintEnd_toStartOf="@id/iv_forward_arrow"
-        app:layout_constraintTop_toBottomOf="@id/iv_motorcycle"
-        app:layout_constraintBottom_toBottomOf="@id/iv_back_arrow"
-        tools:text="WIDTH (mm)" />
-
-    <ImageView
-        android:id="@+id/iv_forward_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:contentDescription="@string/txt_desc_forward_arrow"
-        android:src="@drawable/ic_arrow_forward"
-        app:layout_constraintEnd_toEndOf="@id/iv_motorcycle"
-        app:layout_constraintTop_toBottomOf="@id/iv_motorcycle" />
-
-    <TextView
-        android:id="@+id/tv_make_and_model"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_margin="30dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#0000ff"
-        android:padding="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_motorcycle"
-        tools:text="MAKE AND MODEL" />
-
-    <ImageView
-        android:id="@+id/iv_image_search"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:contentDescription="@string/txt_desc_motorcycle"
-        android:src="@drawable/ic_image_search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_make_and_model"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TableLayout
-        android:id="@+id/tl_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/search_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_image_search">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/md_theme_primary"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/tv_year_property"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/txt_year"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                tools:text="year property" />
-
-            <TextView
-                android:id="@+id/tv_year_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                tools:text="year data" />
-        </TableRow>
-
-        <TableRow
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbarDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tv_type_property"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/txt_type"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="type property" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/mToolbarDetail"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_scrollEffect="compress"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:title="@string/app_name"
+                app:titleTextColor="@color/design_default_color_on_primary" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-            <TextView
-                android:id="@+id/tv_type_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="type data" />
-        </TableRow>
+        <ImageView
+            android:id="@+id/iv_motorcycle"
+            android:layout_width="300dp"
+            android:layout_height="225dp"
+            android:padding="5dp"
+            android:contentDescription="@string/txt_desc_motorcycle"
+            android:src="@drawable/iv_motorcycle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbarDetail" />
 
-        <TableRow
+        <ImageView
+            android:id="@+id/iv_upward_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/txt_desc_upward_arrow"
+            android:src="@drawable/ic_arrow_upward"
+            app:layout_constraintTop_toTopOf="@id/iv_motorcycle"
+            app:layout_constraintStart_toEndOf="@id/iv_motorcycle"/>
+
+        <TextView
+            android:id="@+id/tv_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:rotation="90"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toStartOf="@id/iv_upward_arrow"
+            app:layout_constraintEnd_toEndOf="@id/iv_upward_arrow"
+            app:layout_constraintTop_toBottomOf="@id/iv_upward_arrow"
+            app:layout_constraintBottom_toTopOf="@id/iv_downward_arrow"
+            tools:text="HEIGHT (mm)" />
+
+        <ImageView
+            android:id="@+id/iv_downward_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:contentDescription="@string/txt_desc_downward_arrow"
+            android:src="@drawable/ic_arrow_downward"
+            app:layout_constraintBottom_toBottomOf="@id/iv_motorcycle"
+            app:layout_constraintStart_toEndOf="@id/iv_motorcycle"/>
+
+        <ImageView
+            android:id="@+id/iv_back_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:contentDescription="@string/txt_desc_back_arrow"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="@id/iv_motorcycle"
+            app:layout_constraintTop_toBottomOf="@id/iv_motorcycle" />
+
+        <TextView
+            android:id="@+id/tv_width"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:padding="5dp"
+            app:layout_constraintStart_toEndOf="@id/iv_back_arrow"
+            app:layout_constraintEnd_toStartOf="@id/iv_forward_arrow"
+            app:layout_constraintTop_toBottomOf="@id/iv_motorcycle"
+            app:layout_constraintBottom_toBottomOf="@id/iv_back_arrow"
+            tools:text="WIDTH (mm)" />
+
+        <ImageView
+            android:id="@+id/iv_forward_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:contentDescription="@string/txt_desc_forward_arrow"
+            android:src="@drawable/ic_arrow_forward"
+            app:layout_constraintEnd_toEndOf="@id/iv_motorcycle"
+            app:layout_constraintTop_toBottomOf="@id/iv_motorcycle" />
+
+        <TextView
+            android:id="@+id/tv_make_and_model"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_margin="30dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#0000ff"
+            android:padding="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_motorcycle"
+            tools:text="MAKE AND MODEL" />
+
+        <ImageView
+            android:id="@+id/iv_image_search"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:contentDescription="@string/txt_desc_motorcycle"
+            android:src="@drawable/ic_image_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_make_and_model"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TableLayout
+            android:id="@+id/tl_data"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/md_theme_primary"
-            android:padding="5dp">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/search_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_image_search">
 
-            <TextView
-                android:id="@+id/tv_displacement_property"
-                android:layout_width="0dp"
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_primary"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_year_property"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/txt_year"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    tools:text="year property" />
+
+                <TextView
+                    android:id="@+id/tv_year_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    tools:text="year data" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/txt_displacement"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                tools:text="Displacement property" />
+                android:padding="5dp">
 
-            <TextView
-                android:id="@+id/tv_displacement_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                tools:text="Displacement data" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/tv_type_property"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/txt_type"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="type property" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/tv_type_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="type data" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/tv_power_property"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/txt_power"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="power property" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_primary"
+                android:padding="5dp">
 
-            <TextView
-                android:id="@+id/tv_power_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="power data" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/tv_displacement_property"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/txt_displacement"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    tools:text="Displacement property" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/md_theme_primary"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/tv_displacement_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    tools:text="Displacement data" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/tv_torque_property"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/txt_torque"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                tools:text="torque property" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp">
 
-            <TextView
-                android:id="@+id/tv_torque_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                tools:text="torque data" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/tv_power_property"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/txt_power"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="power property" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/tv_power_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="power data" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/tv_gearbox_property"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/txt_gearbox"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="gearbox property" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_primary"
+                android:padding="5dp">
 
-            <TextView
-                android:id="@+id/tv_gearbox_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="gearbox data" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/tv_torque_property"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/txt_torque"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    tools:text="torque property" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/md_theme_primary"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/tv_torque_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    tools:text="torque data" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/tv_front_tire_property"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/txt_front_tire"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                tools:text="front tire property" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp">
 
-            <TextView
-                android:id="@+id/tv_front_tire_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                tools:text="front tire data" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/tv_gearbox_property"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/txt_gearbox"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="gearbox property" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/tv_gearbox_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="gearbox data" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/tv_rear_tire_property"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/txt_rear_tire"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="rear tire property" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_primary"
+                android:padding="5dp">
 
-            <TextView
-                android:id="@+id/tv_rear_tire_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="rear tire data" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/tv_front_tire_property"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/txt_front_tire"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    tools:text="front tire property" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/md_theme_primary"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/tv_front_tire_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    tools:text="front tire data" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/tv_total_weight_property"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/txt_total_weight"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                tools:text="total weight property" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp">
 
-            <TextView
-                android:id="@+id/tv_total_weight_data"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                tools:text="total weight data" />
-        </TableRow>
-    </TableLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_rear_tire_property"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/txt_rear_tire"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="rear tire property" />
+
+                <TextView
+                    android:id="@+id/tv_rear_tire_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="rear tire data" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_primary"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_total_weight_property"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/txt_total_weight"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    tools:text="total weight property" />
+
+                <TextView
+                    android:id="@+id/tv_total_weight_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    tools:text="total weight data" />
+            </TableRow>
+        </TableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+

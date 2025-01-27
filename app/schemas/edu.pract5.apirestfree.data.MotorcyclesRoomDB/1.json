@@ -1,0 +1,100 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "92179c2ee9ff616ade81c8ad30c1dae3",
+    "entities": [
+      {
+        "tableName": "Motorcycle",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`motorcycleId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `make` TEXT, `model` TEXT, `year` TEXT, `type` TEXT, `displacement` TEXT, `power` TEXT, `torque` TEXT, `gearbox` TEXT, `frontTire` TEXT, `rearTire` TEXT, `totalWeight` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "motorcycleId",
+            "columnName": "motorcycleId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "make",
+            "columnName": "make",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "model",
+            "columnName": "model",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "year",
+            "columnName": "year",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "displacement",
+            "columnName": "displacement",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "power",
+            "columnName": "power",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "torque",
+            "columnName": "torque",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gearbox",
+            "columnName": "gearbox",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "frontTire",
+            "columnName": "frontTire",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rearTire",
+            "columnName": "rearTire",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalWeight",
+            "columnName": "totalWeight",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "motorcycleId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '92179c2ee9ff616ade81c8ad30c1dae3')"
+    ]
+  }
+}

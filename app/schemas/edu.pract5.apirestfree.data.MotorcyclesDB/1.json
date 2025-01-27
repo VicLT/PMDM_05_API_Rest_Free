@@ -1,0 +1,108 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "66253d0cf4b72389f49b19a356bac212",
+    "entities": [
+      {
+        "tableName": "Motorcycle",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`displacement` TEXT, `frontTire` TEXT, `gearbox` TEXT, `make` TEXT NOT NULL, `model` TEXT NOT NULL, `power` TEXT, `rearTire` TEXT, `torque` TEXT, `totalWeight` TEXT, `type` TEXT, `year` TEXT NOT NULL, `totalHeight` TEXT, `totalWidth` TEXT, PRIMARY KEY(`year`, `make`, `model`))",
+        "fields": [
+          {
+            "fieldPath": "displacement",
+            "columnName": "displacement",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "frontTire",
+            "columnName": "frontTire",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gearbox",
+            "columnName": "gearbox",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "make",
+            "columnName": "make",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "model",
+            "columnName": "model",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "power",
+            "columnName": "power",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rearTire",
+            "columnName": "rearTire",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "torque",
+            "columnName": "torque",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalWeight",
+            "columnName": "totalWeight",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "year",
+            "columnName": "year",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalHeight",
+            "columnName": "totalHeight",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalWidth",
+            "columnName": "totalWidth",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "year",
+            "make",
+            "model"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '66253d0cf4b72389f49b19a356bac212')"
+    ]
+  }
+}

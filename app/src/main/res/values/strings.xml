@@ -13,6 +13,7 @@
     <string name="txt_front_tire">Front tire</string>
     <string name="txt_gearbox">Gearbox</string>
     <string name="txt_make_and_model">%1$s %2$s</string>
+    <string name="txt_year_brand_model">%1$s - %2$s %3$s</string>
     <string name="txt_no_browser">The web browser could not be opened.</string>
     <string name="txt_no_connection">No Internet connection.</string>
     <string name="txt_no_data">No motorcycle data.</string>

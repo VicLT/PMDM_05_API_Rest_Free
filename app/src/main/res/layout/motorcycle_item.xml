@@ -20,8 +20,8 @@
         android:minHeight="50dp">
 
         <TextView
-            android:id="@+id/tv_year"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_year_brand_model"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:autoSizeMaxTextSize="20sp"
@@ -31,44 +31,11 @@
             android:autoSizeTextType="uniform"
             android:textSize="16sp"
             android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="AÑO" />
-
-        <TextView
-            android:id="@+id/tv_make"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:autoSizeMaxTextSize="20sp"
-            android:autoSizeMinTextSize="8sp"
-            android:autoSizePresetSizes="2sp"
-            android:autoSizeStepGranularity="1dp"
-            android:autoSizeTextType="uniform"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_year"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="MARCA" />
-
-        <TextView
-            android:id="@+id/tv_model"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:autoSizeMaxTextSize="20sp"
-            android:autoSizeMinTextSize="8sp"
-            android:autoSizePresetSizes="2sp"
-            android:autoSizeStepGranularity="1dp"
-            android:autoSizeTextType="uniform"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_make"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="MODELO" />
+            app:layout_constraintEnd_toStartOf="@id/ic_delete"
+            tools:text="AÑO + MARCA + MODELO" />
 
         <ImageView
             android:id="@+id/ic_delete"

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import edu.pract5.apirestfree.R
 import edu.pract5.apirestfree.databinding.MotorcycleItemBinding
 import edu.pract5.apirestfree.models.Motorcycle
 
@@ -64,10 +65,12 @@ class MotorcyclesAdapter(
         private val bind = MotorcycleItemBinding.bind(view)
 
         fun bind(motorcycle: Motorcycle) {
-            bind.tvYear.text = motorcycle.year
-            bind.tvMake.text = motorcycle.make
-            bind.tvModel.text = motorcycle.model
-
+            bind.tvYearBrandModel.text = String.format(
+                bind.root.context.getString(R.string.txt_year_brand_model),
+                motorcycle.year,
+                motorcycle.make,
+                motorcycle.model
+            )
             bind.root.setOnClickListener {
                 onClickDetail(motorcycle)
             }

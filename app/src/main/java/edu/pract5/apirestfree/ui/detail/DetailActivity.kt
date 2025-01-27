@@ -82,13 +82,12 @@ class DetailActivity : AppCompatActivity() {
     private fun setupDetailView(motorcycle: Motorcycle) {
         binding.tvHeight.text = if (motorcycle.totalHeight.isNullOrEmpty()) "No data" else motorcycle.totalHeight
         binding.tvWidth.text = if (motorcycle.totalWidth.isNullOrEmpty()) "No data" else motorcycle.totalWidth
-        binding.tvMakeAndModel.text = String.format(getString(
-                R.string.txt_make_and_model
-            ),
-                motorcycle.make,
-                motorcycle.model
-            ).uppercase(Locale.getDefault())
-        binding.tvYearData.text = if (motorcycle.year.isNullOrEmpty()) "-" else motorcycle.year
+        binding.tvMakeAndModel.text = String.format(
+            getString(R.string.txt_make_and_model),
+            motorcycle.make,
+            motorcycle.model
+        ).uppercase(Locale.getDefault())
+        binding.tvYearData.text = motorcycle.year.ifEmpty { "-" }
         binding.tvTypeData.text = if (motorcycle.type.isNullOrEmpty()) "-" else motorcycle.type
         binding.tvDisplacementData.text = if (motorcycle.displacement.isNullOrEmpty()) "-" else motorcycle.displacement
         binding.tvPowerData.text = if (motorcycle.power.isNullOrEmpty()) "-" else motorcycle.power
@@ -112,7 +111,7 @@ class DetailActivity : AppCompatActivity() {
                         getString(R.string.url_google_images),
                         motorcycle.make,
                         motorcycle.model,
-                        motorcycle.year ?: ""
+                        motorcycle.year
                     )
                 )
             ).apply {
